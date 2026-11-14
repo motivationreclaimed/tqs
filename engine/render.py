@@ -101,7 +101,8 @@ def render(kind, S, A, B, timings, audio, out, reciter_name, pick_clip, channel=
     for i, (s0, s1, path, dur) in enumerate(segs):
         L = s1 - s0 + XF + 0.2
         inp += ["-i", path]
-        zoom = f"scale=w='trunc({W}*(1+0.06*t/{L:.2f})/2)*2':h=-2:eval=frame:flags=bicubic,crop={W}:{H}"
+        zoom = (f"scale=w='trunc({W}*(1+0.06*t/{L:.2f})/2)*2':h=-2:eval=frame:flags=bicubic,crop={W}:{H}"
+                if vertical else "null")
         fl.append(f"[{i}:v]trim=0:{L:.3f},setpts=PTS-STARTPTS,{base},{GRADE},{zoom},setsar=1[v{i}]")
     last = "v0"
     for i in range(1, len(segs)):
@@ -112,8 +113,10 @@ def render(kind, S, A, B, timings, audio, out, reciter_name, pick_clip, channel=
               f"fade=in:0:d={FIN},fade=out:st={total - FOUT - 0.2:.3f}:d={FOUT},format=yuv420p[v]")
     fl.append(f"[{n+1}:a]atrim={a0:.3f}:{a1:.3f},asetpts=PTS-STARTPTS,adelay={int((INTRO + LEAD) * 1000)}:all=1,apad,"
               f"atrim=0:{total:.3f},afade=out:st={end_audio + 0.3:.3f}:d=1.2[a]")
+    vbit = max(300, int(88e6 * 8 / total / 1000) - 128)   # long form: fits under ~90 MB (GitHub limit 100 MB)
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *inp, "-loop", "1", "-i", band, "-i", audio,
                     "-filter_complex", ";".join(fl), "-map", "[v]", "-map", "[a]", "-t", f"{total:.3f}",
-                    "-c:v", "libx264", "-preset", "veryfast", "-crf", "21" if vertical else "23",
-                    "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)], check=True)
+                    "-c:v", "libx264", "-preset", "veryfast" if vertical else "medium",
+                    *(["-crf", "21"] if vertical else ["-b:v", f"{vbit}k", "-maxrate", f"{int(vbit*1.4)}k", "-bufsize", f"{vbit*2}k"]),
+                    "-r", "30" if vertical else "24", "-c:a", "aac", "-b:a", "192k" if vertical else "128k", "-movflags", "+faststart", str(out)], check=True)
     return {"seconds": round(total, 1), "verses": f"{S}:{A}-{B}", "clips": [os.path.basename(s[2]) for s in segs]}

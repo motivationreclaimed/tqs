@@ -7,7 +7,6 @@
  "long_every_days": 14,
  "long_order": [
   "abdulbasit_mujawwad:55",
-  "mishary:2",
   "abdulbasit_mujawwad:67",
   "mishary:36",
   "mishary:55",
@@ -32,5 +31,8 @@
    "6af8e6b029e54cb125a68757"
   ],
   "youtube_account_id": "TO_IDENTIFY"
+ },
+ "manual_long": {
+  "mishary:2": "Al-Baqarah (2 h) is too large for automatic hosting (>100 MB); make/upload manually if wanted."
  }
 }

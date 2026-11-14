@@ -14,7 +14,7 @@ the schedule must never stop.
 """
 import datetime as dt, hashlib, json, os, random, subprocess, sys
 from pathlib import Path
-from qlib import ROOT, DATA, STATE, CACHE, OUT, REPO, ASSETS_TAG, VIDEOS_TAG, RECITERS, NAMES, MEANINGS
+from qlib import ROOT, DATA, STATE, CACHE, OUT, REPO, RECITERS, NAMES, MEANINGS
 import render
 
 CFG = json.loads((ROOT / "config.json").read_text())
@@ -107,10 +107,34 @@ def gh(*args, **kw):
 
 
 def asset(name):
+    """Audio/clips live in the repo (audio/, clips/); files >95 MB are stored as byte-exact .partNN pieces.
+    Works with a full or a partial (--filter=blob:none) clone: blobs are fetched on demand."""
     p = CACHE / name
-    if not p.exists():
-        gh("release", "download", ASSETS_TAG, "-R", REPO, "-p", name, "-D", str(CACHE), "--clobber")
+    if p.exists():
+        return p
+    folder = "clips" if name.startswith("clip-") else "audio"
+    files = subprocess.run(["git", "-C", str(ROOT), "ls-tree", "--name-only", "HEAD", f"{folder}/"],
+                           check=True, text=True, capture_output=True).stdout.split()
+    parts = sorted(f for f in files if f == f"{folder}/{name}" or f.startswith(f"{folder}/{name}.part"))
+    if not parts:
+        raise SystemExit(f"STOP: asset {name} not found in repo")
+    with open(p, "wb") as out:
+        for f in parts:
+            out.write(subprocess.run(["git", "-C", str(ROOT), "show", f"HEAD:{f}"], check=True, capture_output=True).stdout)
     return p
+
+
+def publish_video(path):
+    """Put the video alone on the orphan 'media' branch (force-pushed, so the repo never grows) -> public URL."""
+    import shutil, tempfile
+    d = Path(tempfile.mkdtemp())
+    run = lambda *a: subprocess.run(["git", *a], cwd=d, check=True, capture_output=True, text=True)
+    run("init", "-q"); run("checkout", "-q", "--orphan", "media")
+    shutil.copy(path, d / Path(path).name)
+    run("add", "."); run("-c", "user.name=The Quran Sounds", "-c", "user.email=tqs@reclaivo.com", "commit", "-qm", "media")
+    remote = subprocess.run(["git", "-C", str(ROOT), "remote", "get-url", "origin"], check=True, capture_output=True, text=True).stdout.strip()
+    run("push", "-f", remote, "media")
+    return f"https://raw.githubusercontent.com/{REPO}/media/{Path(path).name}"
 
 
 def sha256(p):
@@ -171,8 +195,9 @@ def prepare(kind="auto", skip=()):
     out = OUT / f"tqs-{kind}-{rk}-{S:03d}-{A}-{B}-c{cyc}-{dt.datetime.utcnow():%Y%m%d%H%M}.mp4"
     info = render.render(kind, S, A, B, sd / "timings.json", audio, out, RECITERS[rk]["name"],
                          clip_picker(kind == "short"))
-    gh("release", "upload", VIDEOS_TAG, str(out), "-R", REPO, "--clobber")
-    url = f"https://github.com/{REPO}/releases/download/{VIDEOS_TAG}/{out.name}"
+    if out.stat().st_size > 95e6:
+        raise SystemExit(f"STOP: {out.name} is {out.stat().st_size/1e6:.0f} MB (> GitHub's 100 MB limit)")
+    url = publish_video(out)
     acc = CFG["publer"]["short_account_ids"] if kind == "short" else [CFG["publer"]["youtube_account_id"]]
     nxt = {"unit": unit, "cycle": cyc, "kind": kind, "video_url": url, "file": str(out), "caption": caption(kind, rk, S, A, B),
            "title": f"Surah {NAMES[S-1]} ({S}:{A}-{B}) — {RECITERS[rk]['name']}" if kind == "short"
