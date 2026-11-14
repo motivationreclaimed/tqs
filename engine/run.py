@@ -160,7 +160,7 @@ def clip_picker(vertical):
 # ---------------- captions ----------------
 def caption(kind, rk, S, A, B):
     rname, sname, mean = RECITERS[rk]["name"], NAMES[S - 1], MEANINGS.get(S, "")
-    rtag = "#" + "".join(rname.split()[:2]).replace("-", "")
+    rtag = {"mishary": "#MisharyAlafasy", "abdulbasit_mujawwad": "#AbdulBasit"}.get(rk, "")
     stag = "#Surah" + sname.replace("-", "").replace("'", "")
     ref = f"{S}:{A}-{B}" if A != B else f"{S}:{A}"
     if kind == "short":
@@ -192,7 +192,7 @@ def prepare(kind="auto", skip=()):
     audio = asset(f"audio-{rk}-{S:03d}.mp3")
     if appr.get("sha256") and sha256(audio) != appr["sha256"]:
         raise SystemExit(f"STOP: audio for {rk} {S} does not match the verified file (checksum)")
-    out = OUT / f"tqs-{kind}-{rk}-{S:03d}-{A}-{B}-c{cyc}-{dt.datetime.utcnow():%Y%m%d%H%M}.mp4"
+    out = OUT / f"tqs-{kind}-{rk}-{S:03d}-{A}-{B}-c{cyc}-{dt.datetime.now(dt.timezone.utc):%Y%m%d%H%M}.mp4"
     info = render.render(kind, S, A, B, sd / "timings.json", audio, out, RECITERS[rk]["name"],
                          clip_picker(kind == "short"))
     if out.stat().st_size > 95e6:
@@ -211,7 +211,7 @@ def posted(unit, ref):
     log = load_log(); kind = unit.split(":")[0]
     cyc = log["short_cycle"] if kind == "short" else log["long_cycle"]
     log["posts"].append({"unit": unit, "cycle": cyc, "date": dt.date.today().isoformat(),
-                         "time_utc": dt.datetime.utcnow().strftime("%H:%M"), "ref": ref})
+                         "time_utc": dt.datetime.now(dt.timezone.utc).strftime("%H:%M"), "ref": ref})
     save_log(log); print("recorded", unit)
 
 
@@ -231,6 +231,11 @@ def status():
 
 if __name__ == "__main__":
     c = sys.argv[1]
+    if c == "prepare" and "--extra" in sys.argv:
+        # second daily slot: only during the Zapier trial window ("as many as possible")
+        if dt.date.today() > dt.date.fromisoformat(CFG["extra_daily_short_until"]):
+            print("SKIP: extra slot is only used until", CFG["extra_daily_short_until"]); sys.exit(0)
+        sys.argv += ["--kind", "short"]
     if c == "prepare":
         kind = sys.argv[sys.argv.index("--kind") + 1] if "--kind" in sys.argv else "auto"
         skip = sys.argv[sys.argv.index("--skip") + 1:] if "--skip" in sys.argv else []

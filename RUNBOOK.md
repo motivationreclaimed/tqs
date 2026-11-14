@@ -13,7 +13,8 @@ check fails, do not post that video — use the next one, and report.
 ## Steps
 1. Clone: `git clone --depth 1 https://github.com/motivationreclaimed/tqs /tmp/tqs && cd /tmp/tqs/engine`
    Set git identity: `git config user.name "The Quran Sounds"; git config user.email "tqs@reclaivo.com"`.
-2. `python3 run.py prepare` (decides Short vs long by the schedule, renders, uploads to the `videos` release).
+2. `python3 run.py prepare` — or `python3 run.py prepare --extra` for the second (trial-period) slot;
+   if it prints `SKIP`, stop there, nothing to post. It decides Short vs long by the schedule, renders, uploads to the `videos` release).
    It prints JSON with `unit`, `video_url`, `caption`, `title`, `publer_account_ids`.
    If it exits with `STOP`, do not post; report.
 3. Publer via ZapierTQS:
