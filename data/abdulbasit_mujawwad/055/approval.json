@@ -1,0 +1,10 @@
+{
+ "hold_verses": [],
+ "cleared": {
+  "55:2": "User listened 0:07-0:16 on 13 Nov and confirmed he recites عَلَّمَ ٱلْقُرْءَانَ"
+ },
+ "approved_long_over_20min": true,
+ "first_long_video": true,
+ "verified": "Passed: correct Quran.com recording, all verses in order, words match Tanzil text, every verse end on a pause",
+ "sha256": "12a74319e0a62c32f947d316b3d4d1eb94e370a9853fa99b4f629474b54ce224"
+}

@@ -1,0 +1,36 @@
+{
+ "channel": "The Quran Sounds",
+ "contact_email": "tqs@reclaivo.com",
+ "one_short_max_seconds": 70,
+ "short_target_seconds": 30,
+ "first_long_date": "2026-11-15",
+ "long_every_days": 14,
+ "long_order": [
+  "abdulbasit_mujawwad:55",
+  "mishary:2",
+  "abdulbasit_mujawwad:67",
+  "mishary:36",
+  "mishary:55",
+  "mishary:56",
+  "mishary:67"
+ ],
+ "stream_priority": [
+  "mishary:67",
+  "abdulbasit_mujawwad:55",
+  "mishary:36",
+  "abdulbasit_mujawwad:93",
+  "mishary:55",
+  "abdulbasit_mujawwad:67",
+  "mishary:56",
+  "mishary:2"
+ ],
+ "publer": {
+  "workspace_id": "6af8e43b1740237b1ce2be92",
+  "short_account_ids": [
+   "6af8e513d185a8df1464578f",
+   "6af8e58de39d7f4bffa83578",
+   "6af8e6b029e54cb125a68757"
+  ],
+  "youtube_account_id": "TO_IDENTIFY"
+ }
+}

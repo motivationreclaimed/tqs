@@ -1,0 +1,9 @@
+{
+ "hold_verses": [],
+ "cleared": {
+  "2:181": "User listened 1:06:51-1:07:07 on 13 Nov and confirmed the verse ends with ...إِنَّ ٱللَّهَ سَمِيعٌ عَلِيمٌ"
+ },
+ "approved_long_over_20min": true,
+ "verified": "Passed: correct Quran.com recording, all verses in order, words match Tanzil text, every verse end on a pause",
+ "sha256": "e876ebddb65e171a1a282a1657cc7e6d69a3a6551974e96ad29e5063bae27a59"
+}
