@@ -15,8 +15,9 @@ def measure(ass, size, times):
     w, h = size; top, bot = h, 0
     for t in times:
         raw = subprocess.check_output(["ffmpeg", "-loglevel", "error", "-f", "lavfi", "-i",
-                                       f"color=c=black:s={w}x{h}:d={t+0.2}:r=10", "-vf", f"ass={ass}:fontsdir={FONTS}",
-                                       "-ss", f"{t}", "-frames:v", "1", "-f", "rawvideo", "-pix_fmt", "gray", "-"])
+                                       f"color=c=black:s={w}x{h}:d=0.1:r=10",
+                                       "-vf", f"setpts=PTS+{t:.3f}/TB,ass={ass}:fontsdir={FONTS}",
+                                       "-frames:v", "1", "-f", "rawvideo", "-pix_fmt", "gray", "-"])
         a = np.frombuffer(raw, np.uint8).reshape(h, w); rows = np.where(a.max(1) > 40)[0]
         if len(rows): top, bot = min(top, rows[0]), max(bot, rows[-1])
     return int(top), int(bot)
