@@ -270,12 +270,26 @@ def audio_purity(video, audio, ts, A, B, lead):
     a0, a1 = ts[A - 1]["timestamp_from"] / 1000, ts[B - 1]["timestamp_to"] / 1000
     a = pcm(audio, a0, a1 - a0); v = pcm(video)
     L = int(lead * 16000); seg = v[L:L + len(a)]; n = min(len(seg), len(a)); seg, a = seg[:n], a[:n]
-    corr = np.corrcoef(seg, a)[0, 1]
-    res = seg - (seg @ a) / (a @ a) * a
-    extra_db = 20 * np.log10(np.sqrt((a ** 2).mean()) / (np.sqrt((res ** 2).mean()) + 1e-9))
+    def score(x, ref):
+        m = min(len(x), len(ref)); x, ref = x[:m], ref[:m]
+        r = x - (x @ ref) / (ref @ ref) * ref
+        return np.corrcoef(x, ref)[0, 1], 20 * np.log10(np.sqrt((ref ** 2).mean()) / (np.sqrt((r ** 2).mean()) + 1e-9))
+    corr, extra_db = score(seg, a)
+    # reference: the ORIGINAL recitation alone, compressed the same way as the video's audio track.
+    # The video must match it as closely as the reference does -> any added sound shows up as a gap.
+    br = subprocess.check_output(["ffprobe", "-v", "error", "-select_streams", "a", "-show_entries", "stream=bit_rate",
+                                  "-of", "csv=p=0", str(video)]).decode().strip()
+    br = int(br) if br.isdigit() else 192000
+    import tempfile
+    ref_p = tempfile.mktemp(suffix=".m4a")
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", str(a0), "-i", str(audio), "-t", str(a1 - a0),
+                    "-c:a", "aac", "-b:a", str(br), ref_p], check=True)
+    b_corr, b_db = score(pcm(ref_p), a)
     lead_db = 20 * np.log10(np.sqrt((v[:max(1, L - 800)] ** 2).mean()) + 1)
-    if corr < 0.995 or extra_db < 28 or lead_db > 6:
-        raise RuntimeError(f"audio is not the pure recitation (corr {corr:.4f}, extra sound {extra_db:.1f} dB below, lead-in {lead_db:.1f} dB)")
+    if corr < 0.99 or corr < b_corr - 0.0005 or extra_db < b_db - 1.0 or lead_db > 6:
+        raise RuntimeError(f"audio is not the pure recitation (corr {corr:.4f} vs reference {b_corr:.4f}, "
+                           f"difference {extra_db:.1f} dB vs reference {b_db:.1f} dB, lead-in {lead_db:.1f} dB)")
+    return {"corr": round(corr, 4), "ref_corr": round(b_corr, 4), "diff_db": round(extra_db, 1), "ref_db": round(b_db, 1)}
 
 
 def make(kind, unit, cyc):
