@@ -328,7 +328,7 @@ def plan_batch(max_items=14):
         if key in taken or len(items) >= max_items:
             continue
         kind = "short"
-        if t.date() not in long_days and long_due(t.date()) and not any(i["kind"] == "long" for i in items):
+        if CFG.get("youtube_long_ok", False) and t.date() not in long_days and long_due(t.date()) and not any(i["kind"] == "long" for i in items):
             kind = "long"; long_days.add(t.date())
         try:
             unit, cyc = next_unit(kind, skip=used)

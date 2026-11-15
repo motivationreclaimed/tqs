@@ -45,5 +45,7 @@
   "16:00"
  ],
  "schedule_ahead_days": 5,
- "trial_until": "2026-11-28"
+ "trial_until": "2026-11-28",
+ "youtube_long_ok": false,
+ "youtube_long_note": "YouTube removes videos over 15 min until the channel is phone-verified (youtube.com/verify). Set true only after the owner confirms verification."
 }

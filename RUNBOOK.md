@@ -40,3 +40,8 @@
       Failure → `python3 run.py failed "<unit>" "<reason>"` (the slot is refilled next run with another video).
 5. `cd /tmp/tqs && git add -A && git commit -m "Scheduled posts" && git push` (always push the log, even after failures).
 6. Report briefly: what was scheduled (unit + time), anything skipped and why.
+
+## YouTube long videos (15 Nov 2026)
+YouTube removed the first long video "because it was too long": the channel was not verified, so the limit is 15 minutes.
+Long videos are paused while config.json "youtube_long_ok" is false. Set it to true ONLY after the owner confirms
+the channel is verified at youtube.com/verify. Ar-Rahman (Abdul Basit) never went public, so it is posted first after that.

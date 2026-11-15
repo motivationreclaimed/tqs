@@ -8,14 +8,6 @@
    "ref": "publer group gr_da5ba2128453870933cc9bb6 (IG DfvdQH_lIf6, YT __ffIpO9Ius, TikTok queued)"
   },
   {
-   "unit": "long:abdulbasit_mujawwad:55",
-   "cycle": 1,
-   "date": "2026-11-15",
-   "scheduled_at": "2026-11-15T13:00Z",
-   "ref": "publer job 6af91e1d42d3fcd3bd0662a5, media 6af91e0d1710035d7b51e24a (YouTube only)",
-   "at": "2026-11-15T13:00:00Z"
-  },
-  {
    "unit": "short:abdulbasit_mujawwad:55:1-4",
    "cycle": 1,
    "date": "2026-11-15",
@@ -88,7 +80,13 @@
    "scheduled_at": "2026-11-19T19:00:00Z"
   }
  ],
- "failures": [],
+ "failures": [
+  {
+   "unit": "long:abdulbasit_mujawwad:55",
+   "date": "2026-11-15",
+   "reason": "YouTube removed it: 'too long' (20:43). Channel not verified for videos over 15 min. Never visible, so it may be posted again after verification."
+  }
+ ],
  "short_cycle": 1,
  "long_cycle": 1
 }
