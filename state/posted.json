@@ -13,6 +13,78 @@
    "date": "2026-11-15",
    "scheduled_at": "2026-11-15T13:00Z",
    "ref": "RESERVED: pre-rendered in the setup chat; scheduled to YouTube manually for this slot"
+  },
+  {
+   "unit": "short:abdulbasit_mujawwad:55:1-4",
+   "cycle": 1,
+   "date": "2026-11-15",
+   "time_utc": "01:11",
+   "ref": "publer job 6af906a0d185a8df14648f40 (media 6af90693f9116176eb18d28f; IG+TikTok+YT)",
+   "scheduled_at": "2026-11-15T19:00:00Z"
+  },
+  {
+   "unit": "short:mishary:36:1-5",
+   "cycle": 1,
+   "date": "2026-11-15",
+   "time_utc": "01:11",
+   "ref": "publer job 6af906b7a350f0557432ef9e (media 6af906ae1710035d7b51bb01; IG+TikTok+YT)",
+   "scheduled_at": "2026-11-16T13:00:00Z"
+  },
+  {
+   "unit": "short:abdulbasit_mujawwad:93:1-3",
+   "cycle": 1,
+   "date": "2026-11-15",
+   "time_utc": "01:11",
+   "ref": "publer job 6af906d33a8f484368c886b6 (media 6af906c60acc11d344710b53; IG+TikTok+YT)",
+   "scheduled_at": "2026-11-16T19:00:00Z"
+  },
+  {
+   "unit": "short:mishary:55:1-6",
+   "cycle": 1,
+   "date": "2026-11-15",
+   "time_utc": "01:12",
+   "ref": "publer job 6af906edd185a8df14648fc4 (media 6af906e20acc11d344710b62; IG+TikTok+YT)",
+   "scheduled_at": "2026-11-17T13:00:00Z"
+  },
+  {
+   "unit": "short:abdulbasit_mujawwad:67:1-1",
+   "cycle": 1,
+   "date": "2026-11-15",
+   "time_utc": "01:12",
+   "ref": "publer job 6af907081740237b1ce2f657 (media 6af906fbf9116176eb18d343; IG+TikTok+YT)",
+   "scheduled_at": "2026-11-17T19:00:00Z"
+  },
+  {
+   "unit": "short:mishary:56:1-7",
+   "cycle": 1,
+   "date": "2026-11-15",
+   "time_utc": "01:13",
+   "ref": "publer job 6af9073229e54cb125a6bd53 (media 6af907280acc11d344710c64; IG+TikTok+YT)",
+   "scheduled_at": "2026-11-18T13:00:00Z"
+  },
+  {
+   "unit": "short:mishary:2:1-3",
+   "cycle": 1,
+   "date": "2026-11-15",
+   "time_utc": "01:14",
+   "ref": "publer job 6af9074d42d3fcd3bd06427e posts 6af9074d1710035d7b51bb9e/bba1/bba2 (media 6af907410acc11d344710c78; IG+TikTok+YT)",
+   "scheduled_at": "2026-11-18T19:00:00Z"
+  },
+  {
+   "unit": "short:abdulbasit_mujawwad:94:1-8",
+   "cycle": 1,
+   "date": "2026-11-15",
+   "time_utc": "01:14",
+   "ref": "publer job 6af9077229e54cb125a6bde8 (media 6af90768f9116176eb18d422; IG+TikTok+YT)",
+   "scheduled_at": "2026-11-19T13:00:00Z"
+  },
+  {
+   "unit": "short:abdulbasit_mujawwad:97:1-2",
+   "cycle": 1,
+   "date": "2026-11-15",
+   "time_utc": "01:15",
+   "ref": "publer job 6af907901740237b1ce2f6fc (media 6af907871710035d7b51bcb9; IG+TikTok+YT)",
+   "scheduled_at": "2026-11-19T19:00:00Z"
   }
  ],
  "failures": [],

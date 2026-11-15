@@ -222,11 +222,14 @@ def prepare(kind="auto", skip=()):
     print(json.dumps(nxt, indent=1, ensure_ascii=False))
 
 
-def posted(unit, ref):
+def posted(unit, ref, at=None):
     log = load_log(); kind = unit.split(":")[0]
     cyc = log["short_cycle"] if kind == "short" else log["long_cycle"]
-    log["posts"].append({"unit": unit, "cycle": cyc, "date": dt.date.today().isoformat(),
-                         "time_utc": dt.datetime.now(dt.timezone.utc).strftime("%H:%M"), "ref": ref})
+    entry = {"unit": unit, "cycle": cyc, "date": dt.date.today().isoformat(),
+             "time_utc": dt.datetime.now(dt.timezone.utc).strftime("%H:%M"), "ref": ref}
+    if at:
+        entry["scheduled_at"] = at
+    log["posts"].append(entry)
     save_log(log); print("recorded", unit)
 
 
