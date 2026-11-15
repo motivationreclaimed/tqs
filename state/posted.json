@@ -12,7 +12,8 @@
    "cycle": 1,
    "date": "2026-11-15",
    "scheduled_at": "2026-11-15T13:00Z",
-   "ref": "RESERVED: pre-rendered in the setup chat; scheduled to YouTube manually for this slot"
+   "ref": "publer job 6af91e1d42d3fcd3bd0662a5, media 6af91e0d1710035d7b51e24a (YouTube only)",
+   "at": "2026-11-15T13:00:00Z"
   },
   {
    "unit": "short:abdulbasit_mujawwad:55:1-4",
