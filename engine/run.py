@@ -91,14 +91,24 @@ def next_unit(kind, skip=()):
     return todo[0], cyc
 
 
-def long_due(today=None):
-    today = today or dt.date.today()
-    log = load_log()
-    longs = [p for p in log["posts"] if p["unit"].startswith("long:")]
+def long_due(day=None):
+    day = day or dt.date.today()
+    longs = [p for p in load_log()["posts"] if p["unit"].startswith("long:")]
     if not longs:
-        return today >= dt.date.fromisoformat(CFG["first_long_date"])
-    last = max(dt.date.fromisoformat(p["date"]) for p in longs)
-    return (today - last).days >= CFG["long_every_days"]
+        return day >= dt.date.fromisoformat(CFG["first_long_date"])
+    last = max(dt.date.fromisoformat((p.get("scheduled_at") or p["date"])[:10]) for p in longs)
+    return (day - last).days >= CFG["long_every_days"]
+
+
+def slot_times(start, end):
+    d = start.date()
+    while d <= end.date():
+        times = CFG["slots_utc_trial"] if d <= dt.date.fromisoformat(CFG["trial_until"]) else CFG["slots_utc"]
+        for hm in times:
+            t = dt.datetime.combine(d, dt.time(*map(int, hm.split(":"))), tzinfo=dt.timezone.utc)
+            if start <= t <= end:
+                yield t
+        d += dt.timedelta(days=1)
 
 
 # ---------------- assets ----------------
@@ -193,8 +203,13 @@ def prepare(kind="auto", skip=()):
     if appr.get("sha256") and sha256(audio) != appr["sha256"]:
         raise SystemExit(f"STOP: audio for {rk} {S} does not match the verified file (checksum)")
     out = OUT / f"tqs-{kind}-{rk}-{S:03d}-{A}-{B}-c{cyc}-{dt.datetime.now(dt.timezone.utc):%Y%m%d%H%M}.mp4"
-    info = render.render(kind, S, A, B, sd / "timings.json", audio, out, RECITERS[rk]["name"],
-                         clip_picker(kind == "short"))
+    pre = ROOT / "prerendered" / f"{unit.replace(':', '-')}.mp4"
+    if kind == "long" and pre.exists() and cyc == 1:
+        import shutil; shutil.copy(pre, out)          # made in advance (long renders take a while)
+        info = {"seconds": None, "verses": f"{S}:{A}-{B}", "clips": ["prerendered"]}
+    else:
+        info = render.render(kind, S, A, B, sd / "timings.json", audio, out, RECITERS[rk]["name"],
+                             clip_picker(kind == "short"))
     if out.stat().st_size > 95e6:
         raise SystemExit(f"STOP: {out.name} is {out.stat().st_size/1e6:.0f} MB (> GitHub's 100 MB limit)")
     url = publish_video(out)
@@ -213,6 +228,111 @@ def posted(unit, ref):
     log["posts"].append({"unit": unit, "cycle": cyc, "date": dt.date.today().isoformat(),
                          "time_utc": dt.datetime.now(dt.timezone.utc).strftime("%H:%M"), "ref": ref})
     save_log(log); print("recorded", unit)
+
+
+def self_check(audio, ts, A, B):
+    """Re-confirm from the audio itself that every verse boundary in this video sits on a pause and that the
+    recording is the length the timings describe. Any doubt -> raise (the video is not used)."""
+    import numpy as np
+    raw = subprocess.run(["ffmpeg", "-loglevel", "error", "-i", str(audio), "-ac", "1", "-ar", "2000", "-f", "s16le", "-"],
+                         check=True, capture_output=True).stdout
+    x = np.frombuffer(raw, np.int16).astype(float); w = 100; n = len(x) // w
+    db = 20 * np.log10(np.sqrt((x[:n * w].reshape(n, w) ** 2).mean(1)) + 1); med = np.median(db)
+    if abs(len(x) / 2000 - ts[-1]["timestamp_to"] / 1000) > 1.0:
+        raise RuntimeError("audio length does not match timings")
+    bounds = [ts[v - 1]["timestamp_to"] for v in range(A, B + 1)]
+    if ts[A - 1]["timestamp_from"] > 0: bounds.append(ts[A - 1]["timestamp_from"])
+    for b in bounds:
+        i = int(b / 50)
+        seg = db[max(0, i - 6):i + 6]
+        if len(seg) and med - seg.min() < 15:
+            raise RuntimeError(f"verse boundary at {b/1000:.2f}s is not on a pause")
+
+
+def make(kind, unit, cyc):
+    parts = unit.split(":"); rk, S = parts[1], int(parts[2])
+    sd = DATA / rk / f"{S:03d}"
+    appr = json.loads((sd / "approval.json").read_text()) if (sd / "approval.json").exists() else {}
+    ts = json.load(open(sd / "timings.json"))["audio_file"]["timestamps"]
+    A, B = (tuple(map(int, parts[3].split("-"))) if kind == "short" else (1, len(ts)))
+    audio = asset(f"audio-{rk}-{S:03d}.mp3")
+    if appr.get("sha256") and sha256(audio) != appr["sha256"]:
+        raise RuntimeError(f"audio checksum mismatch for {rk} {S}")
+    self_check(audio, ts, A, B)
+    out = OUT / f"tqs-{kind}-{rk}-{S:03d}-{A}-{B}-c{cyc}-{dt.datetime.now(dt.timezone.utc):%Y%m%d%H%M%S}.mp4"
+    pre = ROOT / "prerendered" / f"{unit.replace(':', '-')}.mp4"
+    if kind == "long" and pre.exists() and cyc == 1:
+        import shutil; shutil.copy(pre, out)
+    else:
+        render.render(kind, S, A, B, sd / "timings.json", audio, out, RECITERS[rk]["name"], clip_picker(kind == "short"))
+    if out.stat().st_size > 95e6:
+        raise RuntimeError(f"{out.name} is {out.stat().st_size/1e6:.0f} MB (> 100 MB limit)")
+    acc = CFG["publer"]["short_account_ids"] if kind == "short" else [CFG["publer"]["youtube_account_id"]]
+    return {"unit": unit, "kind": kind, "file": str(out), "caption": caption(kind, rk, S, A, B), "publer_account_ids": acc}
+
+
+def plan_batch(max_items=14):
+    """Fill every empty posting slot from ~30 min from now until schedule_ahead_days. Renders the videos,
+    publishes them together on the media branch and writes /tmp/tqs_out/plan.json."""
+    log = load_log()
+    taken = {(p.get("scheduled_at") or "")[:16] for p in log["posts"]}
+    now = dt.datetime.now(dt.timezone.utc) + dt.timedelta(minutes=30)
+    end = now + dt.timedelta(days=CFG["schedule_ahead_days"])
+    items, used, long_days = [], set(), set()
+    for t in slot_times(now, end):
+        key = t.strftime("%Y-%m-%dT%H:%M")
+        if key in taken or len(items) >= max_items:
+            continue
+        kind = "short"
+        if t.date() not in long_days and long_due(t.date()) and not any(i["kind"] == "long" for i in items):
+            kind = "long"; long_days.add(t.date())
+        try:
+            unit, cyc = next_unit(kind, skip=used)
+            it = make(kind, unit, cyc)
+        except Exception as e:  # never stop: record and use a Short for this slot instead
+            failed(f"{kind}-render", str(e))
+            unit, cyc = next_unit("short", skip=used); it = make("short", unit, cyc)
+        used.add(it["unit"]); it["scheduled_at"] = t.strftime("%Y-%m-%dT%H:%M:00Z"); items.append(it)
+    if items:
+        urls = publish_batch([i["file"] for i in items])
+        for i, u in zip(items, urls): i["video_url"] = u
+    plan = {"workspace_id": CFG["publer"]["workspace_id"], "items": items}
+    (OUT / "plan.json").write_text(json.dumps(plan, indent=1, ensure_ascii=False))
+    print(json.dumps(plan, indent=1, ensure_ascii=False))
+
+
+def publish_batch(paths):
+    """All of this batch's videos together on the orphan 'media' branch (force-pushed; repo never grows)."""
+    import shutil, tempfile
+    d = Path(tempfile.mkdtemp())
+    run = lambda *a: subprocess.run(["git", *a], cwd=d, check=True, capture_output=True, text=True)
+    run("init", "-q"); run("checkout", "-q", "--orphan", "media")
+    for p in paths: shutil.copy(p, d / Path(p).name)
+    run("add", "."); run("-c", "user.name=The Quran Sounds", "-c", "user.email=tqs@reclaivo.com", "commit", "-qm", "media")
+    remote = subprocess.run(["git", "-C", str(ROOT), "remote", "get-url", "origin"], check=True, capture_output=True, text=True).stdout.strip()
+    run("push", "-f", remote, "media")
+    return [f"https://raw.githubusercontent.com/{REPO}/media/{Path(p).name}" for p in paths]
+
+
+def sheet():
+    """One image: two frames from every planned video, labelled, for a visual check before scheduling."""
+    from PIL import Image, ImageDraw
+    plan = json.loads((OUT / "plan.json").read_text()); tiles = []
+    for it in plan["items"]:
+        dur = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", it["file"]]))
+        for f in (0.25, 0.75):
+            p = OUT / f"_f{len(tiles)}.png"
+            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{dur*f:.2f}", "-i", it["file"], "-frames:v", "1",
+                            "-vf", "scale=-2:420", str(p)], check=True)
+            tiles.append((Image.open(p), it["unit"]))
+    W = sum(t[0].width for t in tiles[:6]) or 1
+    rows = [tiles[i:i + 6] for i in range(0, len(tiles), 6)]
+    g = Image.new("RGB", (max(sum(t[0].width for t in r) for r in rows), 440 * len(rows)), "white"); d = ImageDraw.Draw(g)
+    for r, row in enumerate(rows):
+        x = 0
+        for im, u in row:
+            g.paste(im, (x, r * 440 + 20)); d.text((x + 4, r * 440 + 4), u, fill="black"); x += im.width
+    g.save(OUT / "sheet.png"); print(OUT / "sheet.png")
 
 
 def failed(unit, reason):
@@ -240,6 +360,8 @@ if __name__ == "__main__":
         kind = sys.argv[sys.argv.index("--kind") + 1] if "--kind" in sys.argv else "auto"
         skip = sys.argv[sys.argv.index("--skip") + 1:] if "--skip" in sys.argv else []
         prepare(kind, skip)
-    elif c == "posted": posted(sys.argv[2], sys.argv[3])
+    elif c == "plan": plan_batch()
+    elif c == "sheet": sheet()
+    elif c == "posted": posted(sys.argv[2], sys.argv[3], sys.argv[sys.argv.index("--at") + 1] if "--at" in sys.argv else None)
     elif c == "failed": failed(sys.argv[2], " ".join(sys.argv[3:]))
     elif c == "status": status()

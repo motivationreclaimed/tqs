@@ -30,10 +30,20 @@
    "6af8e58de39d7f4bffa83578",
    "6af8e6b029e54cb125a68757"
   ],
-  "youtube_account_id": "TO_IDENTIFY"
+  "youtube_account_id": "6af8e6b029e54cb125a68757",
+  "instagram_account_id": "6af8e513d185a8df1464578f",
+  "tiktok_account_id": "6af8e58de39d7f4bffa83578"
  },
  "manual_long": {
   "mishary:2": "Al-Baqarah (2 h) is too large for automatic hosting (>100 MB); make/upload manually if wanted."
  },
- "extra_daily_short_until": "2026-11-28"
+ "slots_utc_trial": [
+  "13:00",
+  "19:00"
+ ],
+ "slots_utc": [
+  "16:00"
+ ],
+ "schedule_ahead_days": 5,
+ "trial_until": "2026-11-28"
 }
