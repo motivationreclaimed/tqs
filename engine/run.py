@@ -177,15 +177,17 @@ def caption(kind, rk, S, A, B):
         head = f"Surah {sname} ({ref}) — {rname} 🤍"
         body = (f"Beautiful Quran recitation of Surah {sname} ({mean}) by {rname}, with Arabic text and English "
                 f"translation (Saheeh International). A soothing recitation to listen, reflect and find peace.")
-        tags = f"#Quran #QuranRecitation {stag} {rtag} #BeautifulQuran #Islam #Muslim #QuranShorts #Allah #fyp"
+        tags = f"#Quran #QuranRecitation {stag} {rtag} #Islam"
     else:
         head = f"Surah {sname} (Full) — {rname} | Beautiful Quran Recitation with Arabic & English"
         body = (f"The complete Surah {sname} ({mean}), surah {S} of the Holy Quran, in a beautiful and emotional "
                 f"recitation by {rname}. Follow along with the Arabic text and English translation (Saheeh "
                 f"International) — a soothing, peaceful Quran recitation for reflection, relaxation, study and sleep.")
-        tags = f"#Quran #QuranRecitation {stag} {rtag} #FullSurah #BeautifulQuran #Islam #Muslim"
+        tags = f"#Quran #QuranRecitation {stag} {rtag} #Islam"
     contact = f"If you notice any error in this video, please let us know: {CFG['contact_email']}"
-    return f"{head}\n\n{body}\n\n{contact}\n\n{tags}"
+    text = f"{head}\n\n{body}\n\n{contact}\n\n{tags}"
+    assert text.count("#") <= 5, "max 5 hashtags (Instagram/TikTok limit)"
+    return text
 
 
 # ---------------- commands ----------------
