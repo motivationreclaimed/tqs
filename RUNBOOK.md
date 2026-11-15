@@ -6,7 +6,8 @@
    feeling. Unless you have properly confirmed that everything is correct, do not post it.*
 2. **Never stop.** Post every day. If the owner sends no new audio, keep reusing / recycling the surahs already in
    the library (a new cycle starts automatically with different background clips) — forever.
-3. Never post the identical video twice. Never cut a verse. Surah ≤ 1:10 → one Short of the whole surah; longer → ~30 s Shorts.
+3. AUDIO = THE RECITATION ONLY. No music, no clip sound, no background noise — ever (checked automatically).
+   Never post the identical video twice. Never cut a verse. Surah ≤ 1:10 → one Short of the whole surah; longer → ~30 s Shorts.
 4. Shorts → YouTube + Instagram + TikTok as **ONE** Publer post. Long (16:9 full surah) → **YouTube only**, every 14 days.
 5. Captions: MAX 5 HASHTAGS (Instagram/TikTok limit). Surah, reciter, "beautiful Quran recitation" wording, the error-report email, hashtags (the code writes them).
 

@@ -254,6 +254,28 @@ def self_check(audio, ts, A, B):
             raise RuntimeError(f"verse boundary at {b/1000:.2f}s is not on a pause")
 
 
+def audio_purity(video, audio, ts, A, B, lead):
+    """The video's sound must be the recitation and NOTHING else (no music, no clip sound, no noise)."""
+    import numpy as np
+    def pcm(src, ss=0, t=None):
+        cmd = ["ffmpeg", "-loglevel", "error", "-ss", str(ss), "-i", str(src)] + (["-t", str(t)] if t else []) + \
+              ["-ac", "1", "-ar", "16000", "-f", "s16le", "-"]
+        return np.frombuffer(subprocess.run(cmd, capture_output=True, check=True).stdout, np.int16).astype(float)
+    streams = subprocess.check_output(["ffprobe", "-v", "error", "-select_streams", "a", "-show_entries", "stream=index",
+                                       "-of", "csv=p=0", str(video)]).split()
+    if len(streams) != 1:
+        raise RuntimeError(f"video has {len(streams)} audio tracks (must be exactly 1: the recitation)")
+    a0, a1 = ts[A - 1]["timestamp_from"] / 1000, ts[B - 1]["timestamp_to"] / 1000
+    a = pcm(audio, a0, a1 - a0); v = pcm(video)
+    L = int(lead * 16000); seg = v[L:L + len(a)]; n = min(len(seg), len(a)); seg, a = seg[:n], a[:n]
+    corr = np.corrcoef(seg, a)[0, 1]
+    res = seg - (seg @ a) / (a @ a) * a
+    extra_db = 20 * np.log10(np.sqrt((a ** 2).mean()) / (np.sqrt((res ** 2).mean()) + 1e-9))
+    lead_db = 20 * np.log10(np.sqrt((v[:max(1, L - 800)] ** 2).mean()) + 1)
+    if corr < 0.995 or extra_db < 28 or lead_db > 6:
+        raise RuntimeError(f"audio is not the pure recitation (corr {corr:.4f}, extra sound {extra_db:.1f} dB below, lead-in {lead_db:.1f} dB)")
+
+
 def make(kind, unit, cyc):
     parts = unit.split(":"); rk, S = parts[1], int(parts[2])
     sd = DATA / rk / f"{S:03d}"
@@ -270,6 +292,7 @@ def make(kind, unit, cyc):
         import shutil; shutil.copy(pre, out)
     else:
         render.render(kind, S, A, B, sd / "timings.json", audio, out, RECITERS[rk]["name"], clip_picker(kind == "short"))
+    audio_purity(out, audio, ts, A, B, 0.6 if kind == "short" else (5.6 if S in (1, 9) else 10.6))
     if out.stat().st_size > 95e6:
         raise RuntimeError(f"{out.name} is {out.stat().st_size/1e6:.0f} MB (> 100 MB limit)")
     acc = CFG["publer"]["short_account_ids"] if kind == "short" else [CFG["publer"]["youtube_account_id"]]
