@@ -45,3 +45,10 @@
 YouTube removed the first long video "because it was too long": the channel was not verified, so the limit is 15 minutes.
 Long videos are paused while config.json "youtube_long_ok" is false. Set it to true ONLY after the owner confirms
 the channel is verified at youtube.com/verify. Ar-Rahman (Abdul Basit) never went public, so it is posted first after that.
+
+## Changes 15 Nov 2026 (owner)
+- Long video EVERY 7 DAYS (Sundays). After the trial: Shorts Mon-Fri 16:00 UTC + long on Sunday, Saturday off (about 5 Shorts + 1 long a week).
+- Thumbnails: Publer/YouTube take FRAME 0. Videos no longer fade in from black. Long videos open on the title card
+  (big Arabic name, SURAH NAME, reciter) over a mountain/tree clip (THUMB_CLIPS, no birds/animals). Shorts open on the first verse.
+- Long videos are encoded in AV1 (Publer and YouTube accept it): about twice the quality of H.264 at the same file size (<95 MB).
+- Do NOT add rain/nature sounds or anything else to the audio. Recitation only, always.

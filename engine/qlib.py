@@ -102,7 +102,7 @@ def write_ass(path, size, events, vertical):
                    f"2.5,2,5,{margin},{margin},0,1")
     out += ["", "[Events]", "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text"]
     for (s, e, style, text, x, y, align, fs) in events:
-        tag = f"{{\\an{align}\\pos({x},{y})\\fad(300,300)" + (f"\\fs{fs}" if fs else "") + "}"
+        tag = f"{{\\an{align}\\pos({x},{y})\\fad({0 if s <= 0.001 else 300},300)" + (f"\\fs{fs}" if fs else "") + "}"
         out.append(f"Dialogue: 0,{ass_time(s)},{ass_time(e)},{style},,0,0,0,,{tag}{ass_escape(text)}")
     Path(path).write_text("\n".join(out) + "\n", encoding="utf-8")
 

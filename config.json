@@ -4,7 +4,7 @@
  "one_short_max_seconds": 70,
  "short_target_seconds": 30,
  "first_long_date": "2026-11-15",
- "long_every_days": 14,
+ "long_every_days": 7,
  "long_order": [
   "abdulbasit_mujawwad:55",
   "abdulbasit_mujawwad:67",
@@ -47,5 +47,14 @@
  "schedule_ahead_days": 5,
  "trial_until": "2026-11-28",
  "youtube_long_ok": true,
- "youtube_long_note": "Channel verified by owner on 15 Nov 2026 (videos over 15 min allowed)."
+ "youtube_long_note": "Channel verified by owner on 15 Nov 2026 (videos over 15 min allowed).",
+ "post_days": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  6
+ ],
+ "post_days_note": "After the trial: Shorts Mon-Fri at 16:00 UTC, long video on Sunday (every 7 days), Saturday off. About 5 Shorts + 1 long a week."
 }

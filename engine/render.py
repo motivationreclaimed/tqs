@@ -85,9 +85,10 @@ def render(kind, S, A, B, timings, audio, out, reciter_name, pick_clip, channel=
         lab.append((lf, total, "Brand", channel.upper(), W // 2, brand_y + 50, 8, 26 if vertical else 24))
     intro = []
     if not vertical:
-        if S in ARABIC_NAMES: intro.append((0.3, 5.0, "Arabic", ARABIC_NAMES[S], W // 2, 500, 2, 190))
-        intro.append((0.6, 5.0, "Ref", f"SURAH {NAMES[S-1].upper()} · {S}", W // 2, 560, 8, 52))
-        intro.append((0.9, 5.0, "Brand", f"RECITED BY {reciter_name.upper()}", W // 2, 640, 8, 32))
+        # Title card = thumbnail (Publer/YouTube use frame 0): big, centered, only names + reciter, no fade from black
+        if S in ARABIC_NAMES: intro.append((0.0, 5.0, "Arabic", ARABIC_NAMES[S], W // 2, 450, 2, 250))
+        intro.append((0.0, 5.0, "Ref", f"SURAH {NAMES[S-1].upper()}", W // 2, 640, 2, 120))
+        intro.append((0.0, 5.0, "Brand", reciter_name.upper(), W // 2, 690, 8, 50))
         if INTRO >= 10:
             intro.append((5.2, 9.8, "Arabic", BISM_AR, W // 2, 560, 2, 150))
             intro.append((5.4, 9.8, "English", BISM_EN, W // 2, 600, 8, 44))
@@ -114,7 +115,7 @@ def render(kind, S, A, B, timings, audio, out, reciter_name, pick_clip, channel=
         n = len(segs)
         fl.append(f"[{n}:v]format=rgba[band]")
         fl.append(f"[{last}]trim=0:{total:.3f}[bg];[bg][band]overlay=0:0,ass={ass}:fontsdir={FONTS},"
-                  f"fade=in:0:d={FIN},fade=out:st={total - FOUT - 0.2:.3f}:d={FOUT},format=yuv420p[v]")
+                  f"fade=out:st={total - FOUT - 0.2:.3f}:d={FOUT},format=yuv420p[v]")
         fl.append(f"[{n+1}:a]{audio_f}[a]")
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *inp, "-loop", "1", "-i", band, "-i", audio,
                         "-filter_complex", ";".join(fl), "-map", "[v]", "-map", "[a]", "-t", f"{total:.3f}",
@@ -125,20 +126,20 @@ def render(kind, S, A, B, timings, audio, out, reciter_name, pick_clip, channel=
         for i, (s0, s1, path, dur) in enumerate(segs):
             L = s1 - s0; p = os.path.join(work, f"seg{i:04d}.mp4")
             subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", path, "-t", f"{L:.3f}", "-an", "-vf",
-                            f"{base},{GRADE},fps=24,fade=in:0:d=0.7,fade=out:st={max(0, L - 0.7):.3f}:d=0.7,format=yuv420p",
+                            f"{base},{GRADE},fps=24," + ("" if i == 0 else "fade=in:0:d=0.7,") + f"fade=out:st={max(0, L - 0.7):.3f}:d=0.7,format=yuv420p",
                             "-c:v", "libx264", "-preset", "veryfast", "-crf", "16", p], check=True)
             parts.append(p)
         lst = os.path.join(work, "list.txt")
         open(lst, "w").write("".join(f"file '{p}'\n" for p in parts))
         bg = os.path.join(work, "bg.mp4")
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", lst, "-c", "copy", bg], check=True)
-        vbit = max(300, int(88e6 * 8 / total / 1000) - 128)   # keeps the file under ~90 MB (GitHub limit 100 MB)
+        vbit = max(300, int(88e6 * 8 / total / 1000) - 128)   # file under ~90 MB (GitHub limit 100 MB); AV1 gives about twice the quality of H.264 at this size
         fl = (f"[1:v]format=rgba[band];[0:v]trim=0:{total:.3f},setpts=PTS-STARTPTS[bg];[bg][band]overlay=0:0,"
-              f"ass={ass}:fontsdir={FONTS},fade=in:0:d={FIN},fade=out:st={total - FOUT - 0.2:.3f}:d={FOUT},format=yuv420p[v];"
+              f"ass={ass}:fontsdir={FONTS},fade=out:st={total - FOUT - 0.2:.3f}:d={FOUT},format=yuv420p[v];"
               f"[2:a]{audio_f}[a]")
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", bg, "-loop", "1", "-i", band, "-i", audio,
                         "-filter_complex", fl, "-map", "[v]", "-map", "[a]", "-t", f"{total:.3f}",
-                        "-c:v", "libx264", "-preset", "medium", "-b:v", f"{vbit}k", "-maxrate", f"{int(vbit*1.4)}k",
-                        "-bufsize", f"{vbit*2}k", "-r", "24", "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart",
+                        "-c:v", "libsvtav1", "-preset", "8", "-b:v", f"{vbit}k", "-svtav1-params", "tune=0",
+                        "-r", "24", "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart",
                         str(out)], check=True)
     return {"seconds": round(total, 1), "verses": f"{S}:{A}-{B}", "clips": [os.path.basename(s[2]) for s in segs]}

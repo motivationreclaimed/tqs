@@ -103,7 +103,10 @@ def long_due(day=None):
 def slot_times(start, end):
     d = start.date()
     while d <= end.date():
-        times = CFG["slots_utc_trial"] if d <= dt.date.fromisoformat(CFG["trial_until"]) else CFG["slots_utc"]
+        trial = d <= dt.date.fromisoformat(CFG["trial_until"])
+        times = CFG["slots_utc_trial"] if trial else CFG["slots_utc"]
+        if not trial and d.weekday() not in CFG.get("post_days", range(7)):
+            times = []   # after the trial: 5 Shorts (Mon-Fri) + 1 long (Sunday) a week
         for hm in times:
             t = dt.datetime.combine(d, dt.time(*map(int, hm.split(":"))), tzinfo=dt.timezone.utc)
             if start <= t <= end:
@@ -154,15 +157,30 @@ def sha256(p):
     return h.hexdigest()
 
 
+THUMB_CLIPS = ["clip-05.mp4", "clip-06.mp4", "clip-07.mp4", "clip-19.mp4", "clip-20.mp4", "clip-22.mp4", "clip-25.mp4"]
+# ^ simple mountains/trees, no birds or animals: the first scene of a long video, because frame 0 is the thumbnail
+
+
 def clip_picker(vertical):
     clips = [c for c in json.loads((DATA / "clips.json").read_text()) if c["vertical_ok"] or not vertical]
     deck_p = STATE / ("deck_v.json" if vertical else "deck_h.json")
+    thumb_p = STATE / "deck_thumb.json"
+    first = [not vertical]
     def pick():
         names = {c["name"]: c for c in clips}
         deck = [n for n in (json.loads(deck_p.read_text()) if deck_p.exists() else []) if n in names]
         if not deck:
             deck = list(names); random.shuffle(deck)
-        n = deck.pop(0); deck_p.write_text(json.dumps(deck))
+        if first[0]:
+            first[0] = False
+            td = [n for n in (json.loads(thumb_p.read_text()) if thumb_p.exists() else []) if n in names]
+            if not td:
+                td = [n for n in THUMB_CLIPS if n in names]; random.shuffle(td)
+            n = td.pop(0); thumb_p.write_text(json.dumps(td))
+            if n in deck: deck.remove(n)
+        else:
+            n = deck.pop(0)
+        deck_p.write_text(json.dumps(deck))
         return str(asset(n)), names[n]["seconds"]
     return pick
 
