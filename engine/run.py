@@ -174,19 +174,21 @@ def caption(kind, rk, S, A, B):
     stag = "#Surah" + sname.replace("-", "").replace("'", "")
     ref = f"{S}:{A}-{B}" if A != B else f"{S}:{A}"
     if kind == "short":
-        head = f"Surah {sname} ({ref}) — {rname} 🤍"
+        head = f"Surah {sname} ({ref}) | {rname}"
         body = (f"Beautiful Quran recitation of Surah {sname} ({mean}) by {rname}, with Arabic text and English "
                 f"translation (Saheeh International). A soothing recitation to listen, reflect and find peace.")
         tags = f"#Quran #QuranRecitation {stag} {rtag} #Islam"
     else:
-        head = f"Surah {sname} (Full) — {rname} | Beautiful Quran Recitation with Arabic & English"
+        head = f"Surah {sname} (Full) | {rname} | Beautiful Quran Recitation with Arabic and English"
         body = (f"The complete Surah {sname} ({mean}), surah {S} of the Holy Quran, in a beautiful and emotional "
                 f"recitation by {rname}. Follow along with the Arabic text and English translation (Saheeh "
-                f"International) — a soothing, peaceful Quran recitation for reflection, relaxation, study and sleep.")
+                f"International). A soothing, peaceful Quran recitation for reflection, relaxation, study and sleep.")
         tags = f"#Quran #QuranRecitation {stag} {rtag} #Islam"
     contact = f"If you notice any error in this video, please let us know: {CFG['contact_email']}"
     text = f"{head}\n\n{body}\n\n{contact}\n\n{tags}"
     assert text.count("#") <= 5, "max 5 hashtags (Instagram/TikTok limit)"
+    import re as _re
+    assert not _re.search("[\u2014\u2013\U0001F000-\U0001FAFF\u2600-\u27BF\uFE0F]", text), "no emojis or dashes"
     return text
 
 
@@ -217,8 +219,8 @@ def prepare(kind="auto", skip=()):
     url = publish_video(out)
     acc = CFG["publer"]["short_account_ids"] if kind == "short" else [CFG["publer"]["youtube_account_id"]]
     nxt = {"unit": unit, "cycle": cyc, "kind": kind, "video_url": url, "file": str(out), "caption": caption(kind, rk, S, A, B),
-           "title": f"Surah {NAMES[S-1]} ({S}:{A}-{B}) — {RECITERS[rk]['name']}" if kind == "short"
-                    else f"Surah {NAMES[S-1]} (Full) — {RECITERS[rk]['name']} | Beautiful Quran Recitation",
+           "title": f"Surah {NAMES[S-1]} ({S}:{A}-{B}) | {RECITERS[rk]['name']}" if kind == "short"
+                    else f"Surah {NAMES[S-1]} (Full) | {RECITERS[rk]['name']} | Beautiful Quran Recitation",
            "publer_workspace_id": CFG["publer"]["workspace_id"], "publer_account_ids": acc, **info}
     (OUT / "next.json").write_text(json.dumps(nxt, indent=1, ensure_ascii=False))
     print(json.dumps(nxt, indent=1, ensure_ascii=False))
