@@ -98,26 +98,47 @@ def render(kind, S, A, B, timings, audio, out, reciter_name, pick_clip, channel=
     segs = plan_background(total, pick_clip)
     base = ("crop=ih*9/16:ih,scale=1080:1920:flags=lanczos" if vertical
             else "scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080")
-    inp, fl = [], []
-    for i, (s0, s1, path, dur) in enumerate(segs):
-        L = s1 - s0 + XF + 0.2
-        inp += ["-i", path]
-        zoom = (f"scale=w='trunc({W}*(1+0.06*t/{L:.2f})/2)*2':h=-2:eval=frame:flags=bicubic,crop={W}:{H}"
-                if vertical else "null")
-        fl.append(f"[{i}:v]trim=0:{L:.3f},setpts=PTS-STARTPTS,{base},{GRADE},{zoom},setsar=1[v{i}]")
-    last = "v0"
-    for i in range(1, len(segs)):
-        fl.append(f"[{last}][v{i}]xfade=transition=fade:duration={XF}:offset={segs[i][0] - XF / 2:.3f}[x{i}]"); last = f"x{i}"
-    n = len(segs); FIN, FOUT = 0.3, (1.0 if vertical else 2.5)
-    fl.append(f"[{n}:v]format=rgba[band]")
-    fl.append(f"[{last}]trim=0:{total:.3f}[bg];[bg][band]overlay=0:0,ass={ass}:fontsdir={FONTS},"
-              f"fade=in:0:d={FIN},fade=out:st={total - FOUT - 0.2:.3f}:d={FOUT},format=yuv420p[v]")
-    fl.append(f"[{n+1}:a]atrim={a0:.3f}:{a1:.3f},asetpts=PTS-STARTPTS,adelay={int((INTRO + LEAD) * 1000)}:all=1,apad,"
-              f"atrim=0:{total:.3f},afade=out:st={end_audio + 0.3:.3f}:d=1.2[a]")
-    vbit = max(300, int(88e6 * 8 / total / 1000) - 128)   # long form: fits under ~90 MB (GitHub limit 100 MB)
-    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *inp, "-loop", "1", "-i", band, "-i", audio,
-                    "-filter_complex", ";".join(fl), "-map", "[v]", "-map", "[a]", "-t", f"{total:.3f}",
-                    "-c:v", "libx264", "-preset", "veryfast" if vertical else "medium",
-                    *(["-crf", "21"] if vertical else ["-b:v", f"{vbit}k", "-maxrate", f"{int(vbit*1.4)}k", "-bufsize", f"{vbit*2}k"]),
-                    "-r", "30" if vertical else "24", "-c:a", "aac", "-b:a", "192k" if vertical else "128k", "-movflags", "+faststart", str(out)], check=True)
+    FIN, FOUT = 0.3, (1.0 if vertical else 2.5)
+    audio_f = (f"atrim={a0:.3f}:{a1:.3f},asetpts=PTS-STARTPTS,adelay={int((INTRO + LEAD) * 1000)}:all=1,apad,"
+               f"atrim=0:{total:.3f},afade=out:st={end_audio + 0.3:.3f}:d=1.2")
+    if vertical:  # few scenes: one pass with crossfades and a gentle zoom
+        inp, fl = [], []
+        for i, (s0, s1, path, dur) in enumerate(segs):
+            L = s1 - s0 + XF + 0.2
+            inp += ["-i", path]
+            zoom = f"scale=w='trunc({W}*(1+0.06*t/{L:.2f})/2)*2':h=-2:eval=frame:flags=bicubic,crop={W}:{H}"
+            fl.append(f"[{i}:v]trim=0:{L:.3f},setpts=PTS-STARTPTS,{base},{GRADE},{zoom},setsar=1[v{i}]")
+        last = "v0"
+        for i in range(1, len(segs)):
+            fl.append(f"[{last}][v{i}]xfade=transition=fade:duration={XF}:offset={segs[i][0] - XF / 2:.3f}[x{i}]"); last = f"x{i}"
+        n = len(segs)
+        fl.append(f"[{n}:v]format=rgba[band]")
+        fl.append(f"[{last}]trim=0:{total:.3f}[bg];[bg][band]overlay=0:0,ass={ass}:fontsdir={FONTS},"
+                  f"fade=in:0:d={FIN},fade=out:st={total - FOUT - 0.2:.3f}:d={FOUT},format=yuv420p[v]")
+        fl.append(f"[{n+1}:a]{audio_f}[a]")
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *inp, "-loop", "1", "-i", band, "-i", audio,
+                        "-filter_complex", ";".join(fl), "-map", "[v]", "-map", "[a]", "-t", f"{total:.3f}",
+                        "-c:v", "libx264", "-preset", "veryfast", "-crf", "21", "-r", "30",
+                        "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)], check=True)
+    else:  # long: build each scene separately (low memory, any length), join, then add text + audio
+        parts = []
+        for i, (s0, s1, path, dur) in enumerate(segs):
+            L = s1 - s0; p = os.path.join(work, f"seg{i:04d}.mp4")
+            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", path, "-t", f"{L:.3f}", "-an", "-vf",
+                            f"{base},{GRADE},fps=24,fade=in:0:d=0.7,fade=out:st={max(0, L - 0.7):.3f}:d=0.7,format=yuv420p",
+                            "-c:v", "libx264", "-preset", "veryfast", "-crf", "16", p], check=True)
+            parts.append(p)
+        lst = os.path.join(work, "list.txt")
+        open(lst, "w").write("".join(f"file '{p}'\n" for p in parts))
+        bg = os.path.join(work, "bg.mp4")
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", lst, "-c", "copy", bg], check=True)
+        vbit = max(300, int(88e6 * 8 / total / 1000) - 128)   # keeps the file under ~90 MB (GitHub limit 100 MB)
+        fl = (f"[1:v]format=rgba[band];[0:v]trim=0:{total:.3f},setpts=PTS-STARTPTS[bg];[bg][band]overlay=0:0,"
+              f"ass={ass}:fontsdir={FONTS},fade=in:0:d={FIN},fade=out:st={total - FOUT - 0.2:.3f}:d={FOUT},format=yuv420p[v];"
+              f"[2:a]{audio_f}[a]")
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", bg, "-loop", "1", "-i", band, "-i", audio,
+                        "-filter_complex", fl, "-map", "[v]", "-map", "[a]", "-t", f"{total:.3f}",
+                        "-c:v", "libx264", "-preset", "medium", "-b:v", f"{vbit}k", "-maxrate", f"{int(vbit*1.4)}k",
+                        "-bufsize", f"{vbit*2}k", "-r", "24", "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart",
+                        str(out)], check=True)
     return {"seconds": round(total, 1), "verses": f"{S}:{A}-{B}", "clips": [os.path.basename(s[2]) for s in segs]}
