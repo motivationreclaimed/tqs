@@ -78,6 +78,14 @@
    "time_utc": "01:15",
    "ref": "publer job 6af907901740237b1ce2f6fc (media 6af907871710035d7b51bcb9; IG+TikTok+YT)",
    "scheduled_at": "2026-11-19T19:00:00Z"
+  },
+  {
+   "unit": "long:abdulbasit_mujawwad:55",
+   "cycle": 1,
+   "date": "2026-11-15",
+   "time_utc": "14:56",
+   "ref": "publer post 6af9c813f9116176eb1b1977, youtube CvFY4QbL8Vk",
+   "scheduled_at": "2026-11-15T14:56:26Z"
   }
  ],
  "failures": [
