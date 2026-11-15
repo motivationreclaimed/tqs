@@ -1,39 +1,41 @@
-# The Quran Sounds — daily run (for the scheduled Claude session)
+# The Quran Sounds — scheduled run (follow exactly)
 
-Follow exactly. This is religious scripture: accuracy beats everything. If anything is unclear or any
-check fails, do not post that video — use the next one, and report.
+## The owner's non-negotiable rules
+1. **Accuracy above everything.** This is the Holy Quran and a sensitive page. *If you have a gut feeling that the
+   captions, text and the audio may be incorrect, you do not post it — you move to the next video. Even a slight
+   feeling. Unless you have properly confirmed that everything is correct, do not post it.*
+2. **Never stop.** Post every day. If the owner sends no new audio, keep reusing / recycling the surahs already in
+   the library (a new cycle starts automatically with different background clips) — forever.
+3. Never post the identical video twice. Never cut a verse. Surah ≤ 1:10 → one Short of the whole surah; longer → ~30 s Shorts.
+4. Shorts → YouTube + Instagram + TikTok as **ONE** Publer post. Long (16:9 full surah) → **YouTube only**, every 14 days.
+5. Captions: surah, reciter, "beautiful Quran recitation" wording, the error-report email, hashtags (the code writes them).
 
 ## Accounts — use ONLY these
-- Zapier: the **ZapierTQS** connector (tools `mcp__ZapierTQS__*`). NEVER the plain "Zapier" connector
-  (that belongs to a different channel).
-- Publer app `App232404CLIAPI`, connection **tqs@reclaivo.com**, workspace **TQS** (`6af8e43b1740237b1ce2be92`).
-- Before posting, confirm with `mcp__ZapierTQS__list_zapier_connections` (selected_api `App232404CLIAPI`)
-  that the connection title is `tqs@reclaivo.com`. If not, STOP and report.
+- Zapier: the **ZapierTQS** connector (`mcp__ZapierTQS__*`). NEVER the plain "Zapier" connector (another channel's).
+- Publer app `App232404CLIAPI`, connection **tqs@reclaivo.com**, workspace **TQS** `6af8e43b1740237b1ce2be92`.
+  Accounts: Instagram `6af8e513d185a8df1464578f`, TikTok `6af8e58de39d7f4bffa83578`, YouTube `6af8e6b029e54cb125a68757`.
+- First call `mcp__ZapierTQS__list_zapier_connections` (selected_api `App232404CLIAPI`) and confirm the title is
+  `tqs@reclaivo.com`. If ZapierTQS is missing, disabled or shows another account: STOP, post nothing, report it.
 
 ## Steps
-1. Clone: `git clone --depth 1 https://github.com/motivationreclaimed/tqs /tmp/tqs && cd /tmp/tqs/engine`
-   Set git identity: `git config user.name "The Quran Sounds"; git config user.email "tqs@reclaivo.com"`.
-2. `python3 run.py prepare` — or `python3 run.py prepare --extra` for the second (trial-period) slot;
-   if it prints `SKIP`, stop there, nothing to post. It decides Short vs long by the schedule, renders, uploads to the `videos` release).
-   It prints JSON with `unit`, `video_url`, `caption`, `title`, `publer_account_ids`.
-   If it exits with `STOP`, do not post; report.
-3. Publer via ZapierTQS:
-   a. `execute_zapier_write_action` App232404CLIAPI `upload_media`:
-      workspace_id = `6af8e43b1740237b1ce2be92`, upload_type `url`, file_urls = [video_url], in_library true.
-      Get the media id from the result (if the media is still processing, wait ~1 min and use `find_media`).
-   b. `execute_zapier_write_action` App232404CLIAPI `create_post` — ONE post:
-      workspace_id as above, text = caption, account_ids = publer_account_ids, media_ids = [media id],
-      state `published`.
-4. On success: `python3 run.py posted "<unit>" "<publer post id or ref>"`, then
-   `git add -A && git commit -m "Posted <unit>" && git push`.
-5. On failure: `python3 run.py failed "<unit>" "<reason>"`, then
-   `python3 run.py prepare --skip "<unit>"` and repeat step 3 once with the new video. Commit + push the log
-   either way. Never leave the day without a post if any video can be posted.
-
-## Rules (from the channel owner)
-- Whole verses only; never cut a verse. Text and timings come from Tanzil + Quran.com (verified, checksummed).
-- Surah ≤ 1:10 → one Short of the whole surah; longer → ~30 s Shorts.
-- Shorts → YouTube + Instagram + TikTok in ONE Publer post. Long (16:9 full surah) → YouTube only, every 14 days.
-- Never post an identical video twice. When everything is used, a new cycle starts (new background clips).
-- Captions always: surah, reciter, "beautiful Quran recitation"-style wording, the error-report email, hashtags.
-- The schedule must never stop.
+1. `git clone --depth 1 --filter=blob:none https://github.com/motivationreclaimed/tqs /tmp/tqs && cd /tmp/tqs/engine`
+   `git config user.name "The Quran Sounds"; git config user.email "tqs@reclaivo.com"`
+2. `python3 run.py plan` — fills every empty slot for the next 5 days (renders each video, runs the accuracy
+   self-check, publishes the batch on the `media` branch) and prints `plan.json` (`items`: unit, kind,
+   scheduled_at, caption, publer_account_ids, video_url). If there are no items, the schedule is already full: done.
+3. **Visual check (rule 1):** `python3 run.py sheet`, then Read `/tmp/tqs_out/sheet.png`. For every video confirm:
+   the surah name + verse numbers on screen match its unit, Arabic and English are present and readable, nothing
+   is cut off, no person/face or un-Islamic image in the background. Any doubt about an item → do not schedule it:
+   `python3 run.py failed "<unit>" "<reason>"` and leave its slot for the next run.
+4. For each approved item, via ZapierTQS (Publer):
+   a. `execute_zapier_write_action` `upload_media`: workspace_id, upload_type `url`, file_urls `[video_url]`,
+      in_library `true` → take `results[0].payload[0].id` (status should be `complete`).
+   b. `execute_zapier_write_action` `create_post` — ONE call: workspace_id, text = caption,
+      account_ids = publer_account_ids, media_ids = [media id], state `scheduled`, scheduled_at = item's scheduled_at.
+   c. If a call **times out**, it may still have succeeded: check with `inspect_zapier_actions`
+      (tool_name `publer_find_post`, enum_property `post_id`) for a post with this caption before retrying —
+      never create duplicates.
+   d. Success → `python3 run.py posted "<unit>" "<post ids>" --at "<scheduled_at>"`.
+      Failure → `python3 run.py failed "<unit>" "<reason>"` (the slot is refilled next run with another video).
+5. `cd /tmp/tqs && git add -A && git commit -m "Scheduled posts" && git push` (always push the log, even after failures).
+6. Report briefly: what was scheduled (unit + time), anything skipped and why.
