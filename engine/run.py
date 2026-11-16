@@ -197,13 +197,15 @@ def caption(kind, rk, S, A, B):
                 f"translation (Saheeh International). A soothing recitation to listen, reflect and find peace.")
         tags = f"#Quran #QuranRecitation {stag} {rtag} #Islam"
     else:
-        head = f"Surah {sname} (Full) | {rname} | Beautiful Quran Recitation with Arabic and English"
+        head = f"Surah {sname} (Full) | {rname} | Beautiful Quran Recitation with English Translation"
+        if len(head) > 95: head = f"Surah {sname} (Full) | {rname} | Beautiful Quran Recitation"
         body = (f"The complete Surah {sname} ({mean}), surah {S} of the Holy Quran, in a beautiful and emotional "
                 f"recitation by {rname}. Follow along with the Arabic text and English translation (Saheeh "
                 f"International). A soothing, peaceful Quran recitation for reflection, relaxation, study and sleep.")
         tags = f"#Quran #QuranRecitation {stag} {rtag} #Islam"
     contact = f"If you notice any error in this video, please let us know: {CFG['contact_email']}"
     text = f"{head}\n\n{body}\n\n{contact}\n\n{tags}"
+    assert len(text.split("\n")[0]) <= 95, "YouTube title (first line) must stay under 100 characters"
     assert text.count("#") <= 5, "max 5 hashtags (Instagram/TikTok limit)"
     import re as _re
     assert not _re.search("[\u2014\u2013\U0001F000-\U0001FAFF\u2600-\u27BF\uFE0F]", text), "no emojis or dashes"
