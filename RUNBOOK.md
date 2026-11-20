@@ -8,20 +8,25 @@
    the library (a new cycle starts automatically with different background clips) — forever.
 3. AUDIO = THE RECITATION ONLY. No music, no clip sound, no background noise — ever (checked automatically).
    Never post the identical video twice. Never cut a verse. Surah ≤ 1:10 → one Short of the whole surah; longer → ~30 s Shorts.
-4. Shorts → YouTube + Instagram + TikTok as **ONE** Publer post. Long (16:9 full surah) → **YouTube only**, every 14 days.
+4. Shorts → YouTube + Instagram + TikTok as **ONE** Publer post. Long (16:9 full surah) → **YouTube only, uploaded
+   directly with the YouTube connector** (title, SEO description, tags, reciter thumbnail), **every week on Sunday**.
+4b. **NEVER post Abdul Basit** (strictly licensed). The code excludes him (`disabled_reciters`). If anything with
+   "abdulbasit" ever appears in a plan: do not post it, report it.
+4c. Half of the Shorts are 61 s or longer (they alternate automatically; `mode` 60 vs 30 in plan.json).
 5. Captions: NO emojis, NO em dashes, MAX 5 HASHTAGS (Instagram/TikTok limit). Surah, reciter, "beautiful Quran recitation" wording, the error-report email, hashtags (the code writes them).
 
 ## Accounts — use ONLY these
 - Zapier: the **ZapierTQS** connector (`mcp__ZapierTQS__*`). NEVER the plain "Zapier" connector (another channel's).
 - Publer app `App232404CLIAPI`, connection **tqs@reclaivo.com**, workspace **TQS** `6af8e43b1740237b1ce2be92`.
   Accounts: Instagram `6af8e513d185a8df1464578f`, TikTok `6af8e58de39d7f4bffa83578`, YouTube `6af8e6b029e54cb125a68757`.
+- YouTube app `YouTubeV4CLIAPI` (channel "The Quran Sounds", UCdTannqu76hMX-9phScnpEg): long videos only.
 - First call `mcp__ZapierTQS__list_zapier_connections` (selected_api `App232404CLIAPI`) and confirm the title is
   `tqs@reclaivo.com`. If ZapierTQS is missing, disabled or shows another account: STOP, post nothing, report it.
 
 ## Steps
 1. `git clone --depth 1 --filter=blob:none https://github.com/motivationreclaimed/tqs /tmp/tqs && cd /tmp/tqs/engine`
    `git config user.name "The Quran Sounds"; git config user.email "tqs@reclaivo.com"`
-2. `python3 run.py plan` — fills every empty slot for the next 5 days (renders each video, runs the accuracy
+2. `python3 run.py plan` — fills every empty slot for the next 7 days (renders each video, runs the accuracy
    self-check, publishes the batch on the `media` branch) and prints `plan.json` (`items`: unit, kind,
    scheduled_at, caption, publer_account_ids, video_url). If there are no items, the schedule is already full: done.
 3. **Visual check (rule 1):** `python3 run.py sheet`, then Read `/tmp/tqs_out/sheet.png`. For every video confirm:
@@ -39,7 +44,24 @@
    d. Success → `python3 run.py posted "<unit>" "<post ids>" --at "<scheduled_at>"`.
       Failure → `python3 run.py failed "<unit>" "<reason>"` (the slot is refilled next run with another video).
 5. `cd /tmp/tqs && git add -A && git commit -m "Scheduled posts" && git push` (always push the log, even after failures).
-6. Report briefly: what was scheduled (unit + time), anything skipped and why.
+6. **Long video (only in the Wednesday/Thursday runs; skip on other days):** `python3 run.py long`.
+   If it prints SKIP, there is nothing to do. Otherwise it rendered the coming Sunday's long video and its thumbnail
+   and wrote `/tmp/tqs_out/long.json` (`publish_at`, items[0]: unit, video_url, thumbnail_url, title, description, tags).
+   a. Visual check: grab 3 frames (start, middle, end) of items[0].file and Read the thumbnail; same rule-1 checks.
+   b. ZapierTQS YouTube (`YouTubeV4CLIAPI`) `upload_video`: title, description, video = video_url,
+      thumbnail = thumbnail_url, tags, privacy_status **private**, category_id `27` (Education),
+      default_language `en`, default_audio_language `ar`, made_for_kids `false`, notify_subscribers `true`.
+      Timeout → check with `find_video` (channel UCdTannqu76hMX-9phScnpEg) before retrying. Never duplicate.
+   c. If the thumbnail was not applied, `upload_video_thumbnail` (video_id, thumbnail = thumbnail_url).
+   d. `python3 run.py uploaded_private "<unit>" "<youtube video id>" "<publish_at>"`, then commit + push.
+   The Sunday task makes it public at publish_at (`python3 run.py to_publish` lists it).
+7. Report briefly: what was scheduled (unit + time), anything skipped and why.
+
+## Sunday: make the week's long video public
+`python3 run.py to_publish` → for each item: ZapierTQS YouTube `_zap_raw_request`, method PUT,
+url `https://www.googleapis.com/youtube/v3/videos?part=status`, fail_on_errors true, body
+`{"id":"<youtube_id>","status":{"privacyStatus":"public","embeddable":true,"publicStatsViewable":true,"selfDeclaredMadeForKids":false}}`
+→ then `python3 run.py made_public "<unit>"`, commit + push. If it fails, report it: the owner can switch it to Public in YouTube Studio.
 
 ## YouTube long videos (15 Nov 2026)
 YouTube removed the first long video "because it was too long": the channel was not verified, so the limit is 15 minutes.
@@ -52,3 +74,12 @@ the channel is verified at youtube.com/verify. Ar-Rahman (Abdul Basit) never wen
   (big Arabic name, SURAH NAME, reciter) over a mountain/tree clip (THUMB_CLIPS, no birds/animals). Shorts open on the first verse.
 - Long videos are encoded in AV1 (Publer and YouTube accept it): about twice the quality of H.264 at the same file size (<95 MB).
 - Do NOT add rain/nature sounds or anything else to the audio. Recitation only, always.
+
+## Changes 20 Nov 2026
+- Abdul Basit is never posted again (strictly licensed). Only reciters in the library minus `disabled_reciters`.
+- Half of the Shorts are 61 s or longer (alternating), for TikTok monetisation.
+- Publer's free plan allows at most 10 scheduled posts per account: `plan` only fills up to that. Runs on Sunday and
+  Wednesday keep it topped up. "free plan allows up to 10 scheduled posts" from Publer = schedule is full: stop, not an error.
+- Video hosting: Publer can no longer download raw.githubusercontent.com links. `publish_batch` force-pushes the batch to
+  the `gh-pages` branch and returns https://motivationreclaimed.github.io/tqs/<file> URLs (it waits 90 s for Pages).
+- Renderer fix: Shorts that start mid-surah had the audio 0.55 s early (caught by the audio check, never posted). Fixed.

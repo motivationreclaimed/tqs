@@ -102,6 +102,96 @@
    "time_utc": "21:24",
    "ref": "job:6afa231fd185a8df1467564c",
    "scheduled_at": "2026-11-20T19:00:00Z"
+  },
+  {
+   "unit": "short:mishary:67:1-5",
+   "mode": 60,
+   "cycle": 1,
+   "date": "2026-11-20",
+   "time_utc": "21:18",
+   "ref": "publer job 6b00b8d66eb71dbb543416dd (IG+TikTok+YT)",
+   "scheduled_at": "2026-11-21T13:00:00Z"
+  },
+  {
+   "unit": "short:mishary:1:1-7",
+   "mode": 30,
+   "cycle": 1,
+   "date": "2026-11-20",
+   "time_utc": "21:18",
+   "ref": "publer job 6b00b8dcec5bab8066d4393f (IG+TikTok+YT)",
+   "scheduled_at": "2026-11-21T19:00:00Z"
+  },
+  {
+   "unit": "short:mishary:36:1-8",
+   "mode": 60,
+   "cycle": 1,
+   "date": "2026-11-20",
+   "time_utc": "21:18",
+   "ref": "publer job 6b00b8e3a5adfe30b58ef73b (IG+TikTok+YT)",
+   "scheduled_at": "2026-11-22T13:00:00Z"
+  },
+  {
+   "unit": "short:mishary:112:1-4",
+   "mode": 30,
+   "cycle": 1,
+   "date": "2026-11-20",
+   "time_utc": "21:18",
+   "ref": "publer job 6b00b8e79c78317a54d08e22 (IG+TikTok+YT)",
+   "scheduled_at": "2026-11-22T19:00:00Z"
+  },
+  {
+   "unit": "short:mishary:55:1-10",
+   "mode": 60,
+   "cycle": 1,
+   "date": "2026-11-20",
+   "time_utc": "21:18",
+   "ref": "publer job 6b00b8ee15145a29bd3715ee (IG+TikTok+YT)",
+   "scheduled_at": "2026-11-23T13:00:00Z"
+  },
+  {
+   "unit": "short:mishary:113:1-5",
+   "mode": 30,
+   "cycle": 1,
+   "date": "2026-11-20",
+   "time_utc": "21:18",
+   "ref": "publer job 6b00b8f6696b6c3779bc7f4a (IG+TikTok+YT)",
+   "scheduled_at": "2026-11-23T19:00:00Z"
+  },
+  {
+   "unit": "short:mishary:56:1-12",
+   "mode": 60,
+   "cycle": 1,
+   "date": "2026-11-20",
+   "time_utc": "21:18",
+   "ref": "publer job 6b00b90ad60078c4bb74b914 (IG+TikTok+YT)",
+   "scheduled_at": "2026-11-24T13:00:00Z"
+  },
+  {
+   "unit": "short:mishary:114:1-6",
+   "mode": 30,
+   "cycle": 1,
+   "date": "2026-11-20",
+   "time_utc": "21:18",
+   "ref": "publer job 6b00b910a5adfe30b58ef794 (IG+TikTok+YT)",
+   "scheduled_at": "2026-11-24T19:00:00Z"
+  },
+  {
+   "unit": "short:mishary:2:1-6",
+   "mode": 60,
+   "cycle": 1,
+   "date": "2026-11-20",
+   "time_utc": "21:18",
+   "ref": "publer job 6b00b917fcde9dc0589ea459 (IG+TikTok+YT)",
+   "scheduled_at": "2026-11-25T13:00:00Z"
+  },
+  {
+   "unit": "short:mishary:67:3-4",
+   "mode": 30,
+   "cycle": 1,
+   "date": "2026-11-20",
+   "time_utc": "21:18",
+   "ref": "publer job 6b00b91dfcde9dc0589ea46f (IG+TikTok+YT)",
+   "scheduled_at": "2026-11-25T19:00:00Z"
   }
  ],
  "failures": [
@@ -109,6 +199,26 @@
    "unit": "long:abdulbasit_mujawwad:55",
    "date": "2026-11-15",
    "reason": "YouTube removed it: 'too long' (20:43). Channel not verified for videos over 15 min. Never visible, so it may be posted again after verification."
+  },
+  {
+   "unit": "short30-render",
+   "date": "2026-11-20",
+   "reason": "audio is not the pure recitation (corr -0.0054 vs reference 0.9998, difference 0.1 dB vs reference 34.2 dB, lead-in 64.8 dB)"
+  },
+  {
+   "unit": "short60-render",
+   "date": "2026-11-20",
+   "reason": "audio is not the pure recitation (corr -0.0014 vs reference 0.9998, difference 0.0 dB vs reference 34.6 dB, lead-in 63.4 dB)"
+  },
+  {
+   "unit": "short30-render",
+   "date": "2026-11-20",
+   "reason": "audio is not the pure recitation (corr -0.0054 vs reference 0.9998, difference 0.1 dB vs reference 34.2 dB, lead-in 64.8 dB)"
+  },
+  {
+   "unit": "short60-render",
+   "date": "2026-11-20",
+   "reason": "audio is not the pure recitation (corr -0.0014 vs reference 0.9998, difference 0.0 dB vs reference 34.6 dB, lead-in 63.4 dB)"
   }
  ],
  "short_cycle": 1,
