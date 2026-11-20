@@ -192,6 +192,16 @@
    "time_utc": "21:18",
    "ref": "publer job 6b00b91dfcde9dc0589ea46f (IG+TikTok+YT)",
    "scheduled_at": "2026-11-25T19:00:00Z"
+  },
+  {
+   "unit": "long:mishary:36",
+   "mode": 0,
+   "cycle": 1,
+   "date": "2026-11-20",
+   "time_utc": "22:40",
+   "ref": "youtube M0Ip93nsoRg (private until 2026-11-22T13:00:00Z)",
+   "scheduled_at": "2026-11-22T13:00:00Z",
+   "youtube_private": "M0Ip93nsoRg"
   }
  ],
  "failures": [
