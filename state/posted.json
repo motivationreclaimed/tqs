@@ -212,6 +212,33 @@
    "time_utc": "18:23",
    "ref": "job:6b01e1abefbb7f11ee6842cf",
    "scheduled_at": "2026-11-26T13:00:00Z"
+  },
+  {
+   "unit": "short:mishary:36:6-7",
+   "mode": 30,
+   "cycle": 1,
+   "date": "2026-11-22",
+   "time_utc": "21:26",
+   "ref": "job 6b035e0e2a972ac6f1ea6140",
+   "scheduled_at": "2026-11-26T19:00:00Z"
+  },
+  {
+   "unit": "short:mishary:36:9-12",
+   "mode": 60,
+   "cycle": 1,
+   "date": "2026-11-22",
+   "time_utc": "21:27",
+   "ref": "job 6b035e278e0df73c51d1d3cd",
+   "scheduled_at": "2026-11-27T13:00:00Z"
+  },
+  {
+   "unit": "short:mishary:55:7-10",
+   "mode": 30,
+   "cycle": 1,
+   "date": "2026-11-22",
+   "time_utc": "21:27",
+   "ref": "job 6b035e3e8e0df73c51d1d40a",
+   "scheduled_at": "2026-11-27T19:00:00Z"
   }
  ],
  "failures": [
