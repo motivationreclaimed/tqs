@@ -239,6 +239,16 @@
    "time_utc": "21:27",
    "ref": "job 6b035e3e8e0df73c51d1d40a",
    "scheduled_at": "2026-11-27T19:00:00Z"
+  },
+  {
+   "unit": "long:mishary:55",
+   "mode": 0,
+   "cycle": 1,
+   "date": "2026-11-23",
+   "time_utc": "03:17",
+   "ref": "youtube V1RxExsYOnQ (private until 2026-11-29T13:00:00Z)",
+   "scheduled_at": "2026-11-29T13:00:00Z",
+   "youtube_private": "V1RxExsYOnQ"
   }
  ],
  "failures": [
