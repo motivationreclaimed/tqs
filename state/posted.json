@@ -249,6 +249,15 @@
    "ref": "youtube V1RxExsYOnQ (private until 2026-11-29T13:00:00Z)",
    "scheduled_at": "2026-11-29T13:00:00Z",
    "youtube_private": "V1RxExsYOnQ"
+  },
+  {
+   "unit": "short:mishary:55:11-17",
+   "mode": 60,
+   "cycle": 1,
+   "date": "2026-11-23",
+   "time_utc": "18:24",
+   "ref": "job:6b0484dc6c484293c83f6955",
+   "scheduled_at": "2026-11-28T13:00:00Z"
   }
  ],
  "failures": [
