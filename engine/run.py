@@ -392,6 +392,9 @@ def plan_batch(max_items=14):
             try:
                 unit, cyc = next_unit("short", skip=used, mode=m)
                 it = make("short", unit, cyc); it["mode"], it["cycle"] = m, cyc
+                if m == 60:   # YouTube blocks claimed Shorts of 1-3 min: 60 s+ Shorts go to Instagram + TikTok only
+                    yt = CFG["publer"]["youtube_account_id"]
+                    it["publer_account_ids"] = [a for a in it["publer_account_ids"] if a != yt]
                 break
             except Exception as e:  # never stop: record it and try the other kind of Short
                 failed(f"short{m}-render", str(e))

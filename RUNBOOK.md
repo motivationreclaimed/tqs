@@ -83,3 +83,7 @@ the channel is verified at youtube.com/verify. Ar-Rahman (Abdul Basit) never wen
 - Video hosting: Publer can no longer download raw.githubusercontent.com links. `publish_batch` force-pushes the batch to
   the `gh-pages` branch and returns https://motivationreclaimed.github.io/tqs/<file> URLs (it waits 90 s for Pages).
 - Renderer fix: Shorts that start mid-surah had the audio 0.55 s early (caught by the audio check, never posted). Fixed.
+
+## 23 Nov 2026: 60 s+ Shorts are NOT posted to YouTube
+YouTube blocks every Short of 1-3 minutes that has a copyright claim. Mode-60 Shorts go to Instagram + TikTok only
+(plan.json `publer_account_ids` already leaves YouTube out; use exactly those ids). Mode-30 Shorts go to all three.
