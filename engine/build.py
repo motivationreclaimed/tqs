@@ -15,7 +15,7 @@ RECITER = "RECITED BY MUHAMMAD JUMAH"
 CHANNEL = "THE DUA HOUR"
 
 FMT = {
-    "portrait": dict(W=1080, H=1920, tw=820, top=290, bot=1360, cx=515, title=40, ar=74, tr=34, en=46, rec=30, ch=24, gap=56),
+    "portrait": dict(W=1080, H=1920, tw=740, top=480, bot=1440, cx=540, title=40, ar=74, tr=34, en=46, rec=30, ch=24, gap=56),
     "landscape": dict(W=1920, H=1080, tw=1350, top=120, bot=960, cx=960, title=40, ar=66, tr=30, en=42, rec=28, ch=22, gap=40),
 }
 

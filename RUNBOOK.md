@@ -6,7 +6,8 @@ So this run happens every day and tops the queue back up, one slot at a time, in
 ## Owner's rules (non-negotiable)
 1. **Accuracy first.** These are duas from the Quran and Sunnah. If anything on screen, in the audio or in a caption
    might be wrong (wrong text for the title, cut-off text, wrong reference), do NOT schedule it. Skip it and report it.
-2. Format per week: 3 Shorts (up to about 30 s, portrait), 3 mid videos (1:00 to 1:30, portrait AND landscape),
+2. LANDSCAPE (16:9) ONLY FOR VIDEOS OVER 5 MINUTES. Shorts and mids are portrait only, posted to Instagram, TikTok and YouTube.
+   Format per week: 3 Shorts (up to about 30 s, portrait), 3 mid videos (1:00 to 1:30, portrait only),
    1 long video (about 10 minutes, landscape, one category only, every Sunday).
    During the Publer trial (up to and including 8 Dec 2026): 2 posts a day (08:00 and 19:00 UK).
    After the trial: 1 post a day at 19:00 UK (Mon short, Tue mid, Wed short, Thu mid, Fri short, Sat mid, Sun long).
@@ -14,7 +15,7 @@ So this run happens every day and tops the queue back up, one slot at a time, in
    (not mixed). Over 100 MB, so it cannot be hosted automatically: render it and tell the owner.
 4. Style: dark tinted nature clip, Amiri Arabic, transliteration, English, "RECITED BY MUHAMMAD JUMAH",
    "THE DUA HOUR". Frame 0 is the thumbnail (no fade-in). Fade-out at the end. Quiet nature sound under the
-   recitation (fire, rain, stream, birds, wind; 1 or 2 at random). Shorts keep TikTok's top and bottom clear.
+   recitation (fire, rain, stream, birds, wind; 1 or 2 at random). Portrait text block is centred on the screen (x 540, y 960) inside y 480 to 1440 with about 170 px clear on each side (TikTok/Instagram buttons); never move it towards the top.
 5. Captions: NO emojis, NO em or en dashes, MAX 5 hashtags, first line = YouTube title (max 95 characters),
    every title unique, and ALWAYS the line
    "If you notice any mistake or issue in this video, please contact us at tdh@reclaivo.com".

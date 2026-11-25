@@ -58,13 +58,13 @@ def main(ids):
     for vid in ids:
         v = byid[vid]; week = vid.split("_")[0][1:]
         m = captions(v)
-        shapes = {"short": ["portrait"], "mid": ["portrait", "landscape"], "long": ["landscape"]}[v["kind"]]
+        shapes = {"short": ["portrait"], "mid": ["portrait"], "long": ["landscape"]}[v["kind"]]  # 16:9 only for videos over 5 minutes
         for shape in shapes:
             src = f"{OUT}/out_week{week}/{vid}_{shape}.mp4"
             assert os.path.exists(src), src
             name = f"tdh-{vid.replace('_', '-')}-{shape}.mp4"
             (small if os.path.getsize(src) < SMALL else big).append((src, name))
-            accts = [IG, TT, YT] if v["kind"] == "short" else ([IG, TT] if shape == "portrait" else [YT])
+            accts = [YT] if v["kind"] == "long" else [IG, TT, YT]
             text = m["caption"] if v["kind"] != "long" else f"{m['yt_title']}\n\n{m['caption']}"
             posts.append(dict(id=vid, shape=shape, name=name, accounts=accts, when=v["when"] + "Z", text=text))
     urls = {}

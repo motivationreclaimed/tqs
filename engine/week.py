@@ -58,7 +58,7 @@ def render(week, ids):
         if not v["id"].startswith(f"w{week}_") or (ids and v["id"] not in ids):
             continue
         rng = random.Random(hash(v["id"]) & 0xffffffff)
-        shapes = {"short": ["portrait"], "mid": ["portrait", "landscape"], "long": ["landscape"]}[v["kind"]]
+        shapes = {"short": ["portrait"], "mid": ["portrait"], "long": ["landscape"]}[v["kind"]]  # 16:9 only for videos over 5 minutes
         for shape in shapes:
             out = f"{ROOT}/out_week{week}/{v['id']}_{shape}.mp4"
             if os.path.exists(out):
