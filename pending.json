@@ -2,31 +2,6 @@
  "note": "Rendered and uploaded to the Publer library but NOT scheduled (Publer free plan: max 10 scheduled posts per account). Schedule these with create_post as soon as slots free up or the plan is upgraded. w1_08_long still needs hosting + upload.",
  "posts": [
   {
-   "id": "w1_10_mid",
-   "shape": "portrait",
-   "name": "tdh-w1-10-mid-portrait.mp4",
-   "accounts": [
-    "6b0645f14e667d7eb997d0bf",
-    "6b064625e9a6a63318d8e109"
-   ],
-   "when": "2026-11-30T19:00:00Z",
-   "text": "3 Duas to Say in Salah | Arabic, Transliteration & English\n\nWhat you will hear:\n- Opening Dua of Salah (Hisn al-Muslim 28)\n- Dua in Sujood (Hisn al-Muslim 47)\n- Salawat After Tashahhud (Hisn al-Muslim 54)\n\nIf you notice any mistake or issue in this video, please contact us at tdh@reclaivo.com\n\nRecitation: Muhammad Jumah for OpenDua\nArabic, transliteration and translation: OpenDua (opendua.org), CC BY 4.0\nSource: Hisn al-Muslim (Fortress of the Muslim) by Sa'id bin Ali bin Wahf Al-Qahtani\n\n#dua #islam #hisnulmuslim #theduahour #salah",
-   "url": "https://motivationreclaimed.github.io/tqs/tdh/tdh-w1-10-mid-portrait.mp4",
-   "media_id": "6b06574467a8b92dae034329"
-  },
-  {
-   "id": "w1_10_mid",
-   "shape": "landscape",
-   "name": "tdh-w1-10-mid-landscape.mp4",
-   "accounts": [
-    "6b06464ac225c1163f0ce0ef"
-   ],
-   "when": "2026-11-30T19:00:00Z",
-   "text": "3 Duas to Say in Salah | Arabic, Transliteration & English\n\nWhat you will hear:\n- Opening Dua of Salah (Hisn al-Muslim 28)\n- Dua in Sujood (Hisn al-Muslim 47)\n- Salawat After Tashahhud (Hisn al-Muslim 54)\n\nIf you notice any mistake or issue in this video, please contact us at tdh@reclaivo.com\n\nRecitation: Muhammad Jumah for OpenDua\nArabic, transliteration and translation: OpenDua (opendua.org), CC BY 4.0\nSource: Hisn al-Muslim (Fortress of the Muslim) by Sa'id bin Ali bin Wahf Al-Qahtani\n\n#dua #islam #hisnulmuslim #theduahour #salah",
-   "url": "https://motivationreclaimed.github.io/tqs/tdh/tdh-w1-10-mid-landscape.mp4",
-   "media_id": "6b06574ee01471e6537288df"
-  },
-  {
    "id": "w1_12_mid",
    "shape": "portrait",
    "name": "tdh-w1-12-mid-portrait.mp4",

@@ -1,4 +1,7 @@
-# The Dua Hour: weekly scheduled run (follow exactly)
+# The Dua Hour: DAILY top-up run (follow exactly)
+
+Publer stays on the FREE plan (owner's decision, permanent): max 10 scheduled posts per social account.
+So this run happens every day and tops the queue back up, one slot at a time, in plan order.
 
 ## Owner's rules (non-negotiable)
 1. **Accuracy first.** These are duas from the Quran and Sunnah. If anything on screen, in the audio or in a caption
@@ -26,7 +29,20 @@
 - First call `mcp__ZapierTDH__list_zapier_connections` (selected_api `App232404CLIAPI`) and confirm the title is
   `tdh@reclaivo.com`. If not: STOP, post nothing, report it.
 
-## Steps
+## Daily top-up steps
+1. Setup (below, step 1 of the full steps).
+2. Count scheduled posts per account with the ZapierTDH code action `list_scheduled_posts`
+   (action `code_action_app232404cliapi__list_scheduled_posts`, workspace_id). Count only state `scheduled`.
+3. Work through `pending.json` first, then the next planned videos in state.json (by `when`) that have no
+   `scheduled` flag. For each slot whose `when` is in the future AND whose target accounts all have fewer than
+   10 scheduled posts: render it if needed, visual check, publish.py, upload_media, create_post, then set
+   `"scheduled": true` on that video in state.json (and remove it from pending.json). Stop when any needed
+   account is full. If a slot's time has already passed, skip it and mark it `"skipped": "time passed"`.
+4. If fewer than 7 unscheduled planned videos remain, plan the next week (`week.py plan`).
+5. Commit state.json and pending.json to tdh-engine and push. Report in 3 lines: what was scheduled, what is
+   queued next, any problem.
+
+## Full steps (reference)
 1. Setup: `git clone --depth 1 -b tdh-engine https://github.com/motivationreclaimed/tqs /home/claude/tdh_engine`
    then `bash /home/claude/tdh_engine/setup.sh` (links everything into /home/claude/dua_videos and /home/claude/opendua).
 2. `cd /home/claude/dua_videos && python3 week.py plan <N> <first day YYYY-MM-DD>`: N is the next week number

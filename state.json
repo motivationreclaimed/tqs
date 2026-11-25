@@ -47,7 +47,8 @@
    ],
    "files": {
     "portrait": "/home/claude/dua_videos/out_week1/w1_01_short_portrait.mp4"
-   }
+   },
+   "scheduled": true
   },
   {
    "id": "w1_02_mid",
@@ -78,7 +79,8 @@
     "portrait": "/home/claude/dua_videos/out_week1/w1_02_mid_portrait.mp4",
     "landscape": "/home/claude/dua_videos/out_week1/w1_02_mid_landscape.mp4"
    },
-   "T": 75.3
+   "T": 75.3,
+   "scheduled": true
   },
   {
    "id": "w1_03_short",
@@ -96,7 +98,8 @@
    "files": {
     "portrait": "/home/claude/dua_videos/out_week1/w1_03_short_portrait.mp4"
    },
-   "T": 19.1
+   "T": 19.1,
+   "scheduled": true
   },
   {
    "id": "w1_04_mid",
@@ -127,7 +130,8 @@
     "portrait": "/home/claude/dua_videos/out_week1/w1_04_mid_portrait.mp4",
     "landscape": "/home/claude/dua_videos/out_week1/w1_04_mid_landscape.mp4"
    },
-   "T": 67.0
+   "T": 67.0,
+   "scheduled": true
   },
   {
    "id": "w1_05_short",
@@ -145,7 +149,8 @@
    "files": {
     "portrait": "/home/claude/dua_videos/out_week1/w1_05_short_portrait.mp4"
    },
-   "T": 16.8
+   "T": 16.8,
+   "scheduled": true
   },
   {
    "id": "w1_06_mid",
@@ -167,7 +172,8 @@
     "portrait": "/home/claude/dua_videos/out_week1/w1_06_mid_portrait.mp4",
     "landscape": "/home/claude/dua_videos/out_week1/w1_06_mid_landscape.mp4"
    },
-   "T": 86.0
+   "T": 86.0,
+   "scheduled": true
   },
   {
    "id": "w1_07_short",
@@ -185,7 +191,8 @@
    "files": {
     "portrait": "/home/claude/dua_videos/out_week1/w1_07_short_portrait.mp4"
    },
-   "T": 25.7
+   "T": 25.7,
+   "scheduled": true
   },
   {
    "id": "w1_08_long",
@@ -281,7 +288,8 @@
    "files": {
     "portrait": "/home/claude/dua_videos/out_week1/w1_09_short_portrait.mp4"
    },
-   "T": 24.9
+   "T": 24.9,
+   "scheduled": true
   },
   {
    "id": "w1_10_mid",
@@ -308,7 +316,9 @@
    "files": {
     "landscape": "/home/claude/dua_videos/out_week1/w1_10_mid_landscape.mp4"
    },
-   "T": 84.6
+   "T": 84.6,
+   "scheduled": true,
+   "note": "published early on 25 Nov at the owner's request"
   },
   {
    "id": "w1_11_short",
@@ -326,7 +336,8 @@
    "files": {
     "portrait": "/home/claude/dua_videos/out_week1/w1_11_short_portrait.mp4"
    },
-   "T": 11.9
+   "T": 11.9,
+   "scheduled": true
   },
   {
    "id": "w1_12_mid",
@@ -366,7 +377,8 @@
    "files": {
     "portrait": "/home/claude/dua_videos/out_week1/w1_13_short_portrait.mp4"
    },
-   "T": 12.6
+   "T": 12.6,
+   "scheduled": true
   },
   {
    "id": "w1_14_mid",
