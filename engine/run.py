@@ -315,7 +315,8 @@ def audio_purity(video, audio, ts, A, B, lead):
     """The video's sound must be the recitation and NOTHING else (no music, no clip sound, no noise)."""
     import numpy as np
     def pcm(src, ss=0, t=None):
-        cmd = ["ffmpeg", "-loglevel", "error", "-ss", str(ss), "-i", str(src)] + (["-t", str(t)] if t else []) + \
+        # -ss AFTER -i: decode from the start (exact). Seeking before -i can land off by ~1 s in some MP3s.
+        cmd = ["ffmpeg", "-loglevel", "error", "-i", str(src), "-ss", str(ss)] + (["-t", str(t)] if t else []) + \
               ["-ac", "1", "-ar", "16000", "-f", "s16le", "-"]
         return np.frombuffer(subprocess.run(cmd, capture_output=True, check=True).stdout, np.int16).astype(float)
     streams = subprocess.check_output(["ffprobe", "-v", "error", "-select_streams", "a", "-show_entries", "stream=index",
@@ -337,11 +338,11 @@ def audio_purity(video, audio, ts, A, B, lead):
     br = int(br) if br.isdigit() else 192000
     import tempfile
     ref_p = tempfile.mktemp(suffix=".m4a")
-    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", str(a0), "-i", str(audio), "-t", str(a1 - a0),
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(audio), "-ss", str(a0), "-t", str(a1 - a0),
                     "-c:a", "aac", "-b:a", str(br), ref_p], check=True)
     b_corr, b_db = score(pcm(ref_p), a)
     lead_db = 20 * np.log10(np.sqrt((v[:max(1, L - 800)] ** 2).mean()) + 1)
-    if corr < 0.99 or corr < b_corr - 0.0005 or extra_db < b_db - 1.0 or lead_db > 6:
+    if corr < 0.95 or corr < b_corr - 0.0005 or extra_db < b_db - 1.0 or lead_db > 6:   # relative to the reference: 64 kbps sources lose more in AAC
         raise RuntimeError(f"audio is not the pure recitation (corr {corr:.4f} vs reference {b_corr:.4f}, "
                            f"difference {extra_db:.1f} dB vs reference {b_db:.1f} dB, lead-in {lead_db:.1f} dB)")
     return {"corr": round(corr, 4), "ref_corr": round(b_corr, 4), "diff_db": round(extra_db, 1), "ref_db": round(b_db, 1)}
@@ -381,7 +382,8 @@ def plan_batch(max_items=14):
     # Publer free plan: at most 10 scheduled posts per account at a time
     pending = sum(1 for p in log["posts"] if p["unit"].startswith("short:") and (p.get("scheduled_at") or "") > now.strftime("%Y-%m-%dT%H:%M"))
     max_items = min(max_items, CFG.get("publer_max_scheduled", 10) - pending)
-    mode = next_short_mode()
+    forced = os.environ.get("TQS_FORCE_MODE")          # e.g. 60 for a test batch of only 60 s+ Shorts
+    mode = int(forced) if forced else next_short_mode()
     for t in slot_times(now, end):
         key = t.strftime("%Y-%m-%dT%H:%M")
         if key in taken or len(items) >= max_items:
@@ -397,7 +399,7 @@ def plan_batch(max_items=14):
                 failed(f"short{m}-render", str(e))
         if it is None:
             continue
-        mode = 90 - it["mode"]
+        mode = int(forced) if forced else 90 - it["mode"]
         used.add(it["unit"]); it["scheduled_at"] = t.strftime("%Y-%m-%dT%H:%M:00Z"); items.append(it)
     if items:
         urls = publish_batch([i["file"] for i in items])
