@@ -194,6 +194,15 @@
    "time_utc": "03:12",
    "ref": "publer job 6b0651a213ddc5f774318191 (IG+TikTok+YT)",
    "scheduled_at": "2026-11-25T13:00:00Z"
+  },
+  {
+   "unit": "short:minshawi:55:1-7",
+   "mode": 30,
+   "cycle": 1,
+   "date": "2026-11-25",
+   "time_utc": "18:10",
+   "ref": "publer job 6b07247a40ddf680c4398b95 (IG+TikTok+YT)",
+   "scheduled_at": "2026-11-25T19:00:00Z"
   }
  ],
  "failures": [
