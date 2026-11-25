@@ -203,6 +203,87 @@
    "time_utc": "18:10",
    "ref": "publer job 6b07247a40ddf680c4398b95 (IG+TikTok+YT)",
    "scheduled_at": "2026-11-25T19:00:00Z"
+  },
+  {
+   "unit": "short:minshawi:55:1-13",
+   "mode": 60,
+   "cycle": 1,
+   "date": "2026-11-25",
+   "time_utc": "18:45",
+   "ref": "publer job 6b072c6422a2ee646d2a4b4d (IG+TikTok+YT)",
+   "scheduled_at": "2026-11-26T13:00:00Z"
+  },
+  {
+   "unit": "short:minshawi:67:1-2",
+   "mode": 30,
+   "cycle": 1,
+   "date": "2026-11-25",
+   "time_utc": "18:45",
+   "ref": "publer job 6b072c6ac225c1163f0eb5a4 (IG+TikTok+YT)",
+   "scheduled_at": "2026-11-26T19:00:00Z"
+  },
+  {
+   "unit": "short:minshawi:67:1-5",
+   "mode": 60,
+   "cycle": 1,
+   "date": "2026-11-25",
+   "time_utc": "18:45",
+   "ref": "publer job 6b072c76732fed835d6bf2e3 (IG+TikTok+YT)",
+   "scheduled_at": "2026-11-27T13:00:00Z"
+  },
+  {
+   "unit": "short:shatri:36:1-6",
+   "mode": 30,
+   "cycle": 1,
+   "date": "2026-11-25",
+   "time_utc": "18:45",
+   "ref": "publer job 6b072c7c2ced69845f0d097e (IG+TikTok+YT)",
+   "scheduled_at": "2026-11-27T19:00:00Z"
+  },
+  {
+   "unit": "short:shatri:36:1-9",
+   "mode": 60,
+   "cycle": 1,
+   "date": "2026-11-25",
+   "time_utc": "18:45",
+   "ref": "publer job 6b072c84c225c1163f0eb60a (IG+TikTok+YT)",
+   "scheduled_at": "2026-11-28T13:00:00Z"
+  },
+  {
+   "unit": "short:shatri:67:1-2",
+   "mode": 30,
+   "cycle": 1,
+   "date": "2026-11-25",
+   "time_utc": "18:45",
+   "ref": "publer job 6b072c982ced69845f0d09dd (IG+TikTok+YT)",
+   "scheduled_at": "2026-11-28T19:00:00Z"
+  },
+  {
+   "unit": "short:shatri:67:1-5",
+   "mode": 60,
+   "cycle": 1,
+   "date": "2026-11-25",
+   "time_utc": "18:45",
+   "ref": "publer job 6b072c9de9a6a63318dab42e (IG+TikTok+YT)",
+   "scheduled_at": "2026-11-29T16:00:00Z"
+  },
+  {
+   "unit": "short:shuraim:36:9-11",
+   "mode": 30,
+   "cycle": 1,
+   "date": "2026-11-25",
+   "time_utc": "18:45",
+   "ref": "publer job 6b072ca54e667d7eb999ae4a (IG+TikTok+YT)",
+   "scheduled_at": "2026-11-30T16:00:00Z"
+  },
+  {
+   "unit": "short:shuraim:36:13-20",
+   "mode": 60,
+   "cycle": 1,
+   "date": "2026-11-25",
+   "time_utc": "18:45",
+   "ref": "publer job 6b072cb040ddf680c439a1d5 (IG+TikTok+YT)",
+   "scheduled_at": "2026-12-01T16:00:00Z"
   }
  ],
  "failures": [
