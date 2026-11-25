@@ -411,6 +411,16 @@
    "unit": "short:shatri:67:6-10",
    "date": "2026-11-25",
    "reason": "Owner deleted all future scheduled posts in Publer; slot freed"
+  },
+  {
+   "unit": "short30-render",
+   "date": "2026-11-25",
+   "reason": "verse boundary at 3.66s is not on a pause"
+  },
+  {
+   "unit": "short60-render",
+   "date": "2026-11-25",
+   "reason": "verse boundary at 3.66s is not on a pause"
   }
  ],
  "short_cycle": 1,
