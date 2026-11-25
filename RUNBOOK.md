@@ -6,8 +6,10 @@ So this run happens every day and tops the queue back up, one slot at a time, in
 ## Owner's rules (non-negotiable)
 1. **Accuracy first.** These are duas from the Quran and Sunnah. If anything on screen, in the audio or in a caption
    might be wrong (wrong text for the title, cut-off text, wrong reference), do NOT schedule it. Skip it and report it.
-2. LANDSCAPE (16:9) ONLY FOR VIDEOS OVER 5 MINUTES. Shorts and mids are portrait only, posted to Instagram, TikTok and YouTube.
-   Format per week: 3 Shorts (up to about 30 s, portrait), 3 mid videos (1:00 to 1:30, portrait only),
+2. PORTRAIT (9:16) VIDEOS ARE ONE DUA ONLY. Never merge duas in a portrait video (owner will say when that changes).
+   Merging is only for the weekly 16:9 long video, one category only.
+   LANDSCAPE (16:9) ONLY FOR VIDEOS OVER 5 MINUTES. Shorts and mids are portrait only, posted to Instagram, TikTok and YouTube.
+   Format per week: 3 Shorts (up to about 30 s, portrait), 3 evening videos (portrait, one longer dua each, about 30 to 90 s; planner kind 'mid'),
    1 long video (about 10 minutes, landscape, one category only, every Sunday).
    During the Publer trial (up to and including 8 Dec 2026): 2 posts a day (08:00 and 19:00 UK).
    After the trial: 1 post a day at 19:00 UK (Mon short, Tue mid, Wed short, Thu mid, Fri short, Sat mid, Sun long).

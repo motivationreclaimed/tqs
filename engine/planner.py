@@ -22,7 +22,7 @@ CAT_TAGS = {
 }
 
 
-SPECIAL = {75: "Ayat al-Kursi", 76: "The Three Quls", 79: "Sayyid al-Istighfar", 88: "Ya Hayyu Ya Qayyum",
+SPECIAL = {75: "Ayat al-Kursi", 262: "Dhikr and Dua for Forgiveness and Provision", 77: "Asbahna wa Asbahal Mulku Lillah", 78: "Allahumma Bika Asbahna", 76: "The Three Quls", 79: "Sayyid al-Istighfar", 88: "Ya Hayyu Ya Qayyum",
            86: "Bismillahilladhi La Yadurru", 83: "Hasbiyallahu La Ilaha Illa Huwa", 87: "Raditu Billahi Rabba",
            82: "Dua for Health of Body, Hearing and Sight", 84: "Dua for Pardon and Wellbeing", 70: "The Three Quls After Salah", 71: "Ayat al-Kursi After Salah", 73: "Dua for Beneficial Knowledge After Fajr",
            95: "Dua for Beneficial Knowledge",
@@ -83,27 +83,15 @@ def pick_short(st, rng, E, avoid=(), avoid_cats=()):
 
 
 def pick_mid(st, rng, E, avoid=(), avoid_cats=()):
-    """60-90s: one dua that fits, or 2-4 duas from one category."""
-    free = [e for e in E if e["n"] not in st["used_mid"] and e["n"] not in EXCLUDE_SHORT and e["d"] <= 85
-            and e["n"] not in avoid and e["cat"] not in avoid_cats and e["cat"] != "Sickness & Death"]
-    over = lambda es: sum(x["d"] for x in es) + 2.2 * len(es)
-    for _ in range(400):
-        seed = rng.choice(free)
-        group = [seed]
-        same = [e for e in free if e["cat"] == seed["cat"] and e["n"] != seed["n"]]
-        rng.shuffle(same)
-        for e in same:
-            if over(group) >= 60 or len(group) >= 4:
-                break
-            if over(group + [e]) <= 90:
-                group.append(e)
-        if 60 <= over(group) <= 90:
-            group.sort(key=lambda x: x["n"])
-            st["used_mid"] += [g["n"] for g in group]
-            return group
+    """Portrait videos are ONE dua only (owner's rule; merging only in the 16:9 long video).
+    The evening slot takes a single, longer dua (28-90 s) when one is free, otherwise any single dua."""
+    base = [e for e in E if e["n"] not in st["used_mid"] and e["n"] not in EXCLUDE_SHORT and e["n"] not in avoid
+            and e["cat"] != "Sickness & Death" and e["d"] <= 90]
+    for pool in ([e for e in base if e["d"] >= 28 and e["cat"] not in avoid_cats], [e for e in base if e["d"] >= 28], base):
+        if pool:
+            e = rng.choice(pool); st["used_mid"].append(e["n"]); return [e]
     st["used_mid"] = []
     return pick_mid(st, rng, E, avoid, avoid_cats)
-
 
 LONG_PLAN = [  # weekly long videos (~10 min), one category each, in order
     ("Duas Before Sleeping", "Sleep & Night", lambda e: e["name"] in ("Dua Before Sleeping", "Dua When Waking at Night", "Dua for Fear and Loneliness at Night")),
@@ -153,6 +141,11 @@ def hashtags(cat, extra=()):
     return " ".join((["#dua", "#islam", "#hisnulmuslim", "#theduahour"] + CAT_TAGS.get(cat, ["#muslim"]))[:5])
 
 
+def clean(t):
+    """Captions: no em or en dashes (owner's rule); the source translation sometimes has them."""
+    return re.sub(r"\s*[\u2014\u2013]\s*", ", ", t)
+
+
 def check(text):
     assert len(text.split("\n")[0]) <= 95, "first line is the YouTube title"
     assert text.count("#") <= 5, "max 5 hashtags"
@@ -163,7 +156,7 @@ def check(text):
 
 def meta_short(e, rng):
     yt_title = f"{e['name']} | Hisn al-Muslim {e['ref']}"
-    caption = check(f"{yt_title}\n\n{e['name']} (Hisn al-Muslim {e['ref']}). {rng.choice(SHORT_OPENERS)}\n{e['en']}\n\n"
+    caption = check(f"{yt_title}\n\n{e['name']} (Hisn al-Muslim {e['ref']}). {rng.choice(SHORT_OPENERS)}\n{clean(e['en'])}\n\n"
                     f"{EMAIL_LINE}\n\n{CREDITS}\n\n{hashtags(e['cat'])}")
     return dict(yt_title=yt_title, thumb=e["name"], caption=caption)
 

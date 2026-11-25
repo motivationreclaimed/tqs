@@ -25,7 +25,10 @@
   168,
   171,
   173,
-  175
+  175,
+  116,
+  77,
+  262
  ],
  "used_long_cats": [
   "Duas Before Sleeping"
@@ -82,7 +85,8 @@
     39.0,
     54.9
    ],
-   "scheduled": true
+   "scheduled": false,
+   "dropped": "merged portrait video: owner rule, portrait = one dua only"
   },
   {
    "id": "w1_03_short",
@@ -135,7 +139,8 @@
     33.6,
     56.7
    ],
-   "scheduled": true
+   "scheduled": false,
+   "dropped": "merged portrait video: owner rule, portrait = one dua only"
   },
   {
    "id": "w1_05_short",
@@ -409,6 +414,67 @@
     12.8,
     27.4,
     34.4
+   ],
+   "scheduled": false,
+   "dropped": "merged portrait video: owner rule, portrait = one dua only"
+  },
+  {
+   "id": "w1_02_single",
+   "kind": "short",
+   "when": "2026-11-26T19:00:00",
+   "entries": [
+    116
+   ],
+   "page_titles": [
+    "Dua Qunut in Witr"
+   ],
+   "replaces": "w1_02_mid",
+   "yt_title": "Dua Qunut in Witr | Hisn al-Muslim 116",
+   "thumb": "Dua Qunut in Witr",
+   "caption": "Dua Qunut in Witr | Hisn al-Muslim 116\n\nDua Qunut in Witr (Hisn al-Muslim 116). From Hisn al-Muslim:\nO Allah, guide me along with those whom You have guided, pardon me along with those whom You have pardoned, be an ally to me along with those whom You are an ally to and bless for me that which You have bestowed. Protect me from the evil You have decreed for verily You decree and none can decree over You. For surety, he whom you show allegiance to is never abased and he whom You take as an enemy is never honoured and mighty. O our Lord, Blessed and Exalted are You.\n\nIf you notice any mistake or issue in this video, please contact us at tdh@reclaivo.com\n\nRecitation: Muhammad Jumah for OpenDua\nArabic, transliteration and translation: OpenDua (opendua.org), CC BY 4.0\nSource: Hisn al-Muslim (Fortress of the Muslim) by Sa'id bin Ali bin Wahf Al-Qahtani\n\n#dua #islam #hisnulmuslim #theduahour #sleep",
+   "T": 49.9,
+   "starts": [
+    0.0
+   ],
+   "scheduled": true
+  },
+  {
+   "id": "w1_04_single",
+   "kind": "short",
+   "when": "2026-11-27T19:00:00",
+   "entries": [
+    77
+   ],
+   "page_titles": [
+    "Asbahna wa Asbahal Mulku Lillah"
+   ],
+   "replaces": "w1_04_mid",
+   "yt_title": "Asbahna wa Asbahal Mulku Lillah | Hisn al-Muslim 77",
+   "thumb": "Asbahna wa Asbahal Mulku Lillah",
+   "caption": "Asbahna wa Asbahal Mulku Lillah | Hisn al-Muslim 77\n\nAsbahna wa Asbahal Mulku Lillah (Hisn al-Muslim 77). Make this dua part of your day:\nWe have entered the morning, and all sovereignty belongs to Allah. All praise is for Allah. None has the right to be worshipped except Allah alone, without partner. To Him belong all sovereignty and praise, and He has power over all things. My Lord, I ask You for the good of this day and what follows it. I seek refuge in You from the evil of this day and what follows it. My Lord, I seek refuge in You from laziness and the evils of old age. My Lord, I seek refuge in You from punishment in the Fire and punishment in the grave.\n\nIf you notice any mistake or issue in this video, please contact us at tdh@reclaivo.com\n\nRecitation: Muhammad Jumah for OpenDua\nArabic, transliteration and translation: OpenDua (opendua.org), CC BY 4.0\nSource: Hisn al-Muslim (Fortress of the Muslim) by Sa'id bin Ali bin Wahf Al-Qahtani\n\n#dua #islam #hisnulmuslim #theduahour #adhkar",
+   "T": 80.3,
+   "starts": [
+    0.0
+   ],
+   "scheduled": true
+  },
+  {
+   "id": "w1_14_single",
+   "kind": "short",
+   "when": "2026-12-02T19:00:00",
+   "entries": [
+    262
+   ],
+   "page_titles": [
+    "Dhikr and Dua for Forgiveness and Provision"
+   ],
+   "replaces": "w1_14_mid",
+   "yt_title": "Dhikr and Dua for Forgiveness and Provision | Hisn al-Muslim 262",
+   "thumb": "Dhikr and Dua for Forgiveness and Provision",
+   "caption": "Dhikr and Dua for Forgiveness and Provision | Hisn al-Muslim 262\n\nDhikr and Dua for Forgiveness and Provision (Hisn al-Muslim 262). Save this dua for later:\nThere is no deity worthy of worship except Allah alone, without partner. Allah is the Greatest, supremely great. Abundant praise belongs to Allah. Glory be to Allah, Lord of the worlds. There is no power and no strength except through Allah, the Almighty, the All-Wise. O Allah, forgive me, have mercy on me, guide me, and provide for me.\n\nIf you notice any mistake or issue in this video, please contact us at tdh@reclaivo.com\n\nRecitation: Muhammad Jumah for OpenDua\nArabic, transliteration and translation: OpenDua (opendua.org), CC BY 4.0\nSource: Hisn al-Muslim (Fortress of the Muslim) by Sa'id bin Ali bin Wahf Al-Qahtani\n\n#dua #islam #hisnulmuslim #theduahour #dhikr",
+   "T": 42.6,
+   "starts": [
+    0.0
    ],
    "scheduled": "pending.json"
   }

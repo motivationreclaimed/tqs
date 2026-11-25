@@ -43,10 +43,11 @@ def push_big(files):
     d = tempfile.mkdtemp()
     git(d, "init", "-q"); git(d, "remote", "add", "origin", REMOTE)
     git(d, "fetch", "-q", "--depth", "1", "origin", "gh-pages"); git(d, "checkout", "-q", "-b", "gh-pages", "FETCH_HEAD")
+    shutil.rmtree(f"{d}/tdh", ignore_errors=True)  # only this batch: keeps the shared Pages site small
     os.makedirs(f"{d}/tdh", exist_ok=True)
     for src, name in files:
         shutil.copy(src, f"{d}/tdh/{name}")
-    git(d, "add", "tdh"); git(d, "-c", "user.name=The Dua Hour", "-c", "user.email=tdh@reclaivo.com", "commit", "-qm", "The Dua Hour media")
+    git(d, "add", "-A", "tdh"); git(d, "-c", "user.name=The Dua Hour", "-c", "user.email=tdh@reclaivo.com", "commit", "-qm", "The Dua Hour media")
     git(d, "push", "-q", "origin", "HEAD:gh-pages")
     owner, name_ = REPO.split("/")
     return {name: f"https://{owner}.github.io/{name_}/tdh/{name}" for _, name in files}
