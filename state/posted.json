@@ -241,16 +241,6 @@
    "scheduled_at": "2026-11-27T19:00:00Z"
   },
   {
-   "unit": "long:mishary:55",
-   "mode": 0,
-   "cycle": 1,
-   "date": "2026-11-23",
-   "time_utc": "03:17",
-   "ref": "youtube V1RxExsYOnQ (private until 2026-11-29T13:00:00Z)",
-   "scheduled_at": "2026-11-29T13:00:00Z",
-   "youtube_private": "V1RxExsYOnQ"
-  },
-  {
    "unit": "short:mishary:55:11-17",
    "mode": 60,
    "cycle": 1,
@@ -285,6 +275,11 @@
    "unit": "short60-render",
    "date": "2026-11-20",
    "reason": "audio is not the pure recitation (corr -0.0014 vs reference 0.9998, difference 0.0 dB vs reference 34.6 dB, lead-in 63.4 dB)"
+  },
+  {
+   "unit": "long:mishary:55",
+   "date": "2026-11-25",
+   "reason": "Cancelled by owner (Mishary paused). Left PRIVATE on YouTube: V1RxExsYOnQ"
   }
  ],
  "short_cycle": 1,

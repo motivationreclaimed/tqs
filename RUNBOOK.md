@@ -83,3 +83,9 @@ the channel is verified at youtube.com/verify. Ar-Rahman (Abdul Basit) never wen
 - Video hosting: Publer can no longer download raw.githubusercontent.com links. `publish_batch` force-pushes the batch to
   the `gh-pages` branch and returns https://motivationreclaimed.github.io/tqs/<file> URLs (it waits 90 s for Pages).
 - Renderer fix: Shorts that start mid-surah had the audio 0.55 s early (caught by the audio check, never posted). Fixed.
+
+## 25 Nov 2026 (owner): reciters
+Only Mahmoud Khalil Al-Husary, Muhammad Siddiq Al-Minshawi and Abu Bakr Al-Shatri are used, for Shorts and long videos
+(`disabled_reciters`: mishary, abdulbasit_mujawwad). Hani Ar-Rifai failed verification (verse ends not on pauses).
+Long-video thumbnails for these reciters have no photo (text only). The Mishary Ar-Rahman long video (V1RxExsYOnQ)
+stays PRIVATE and must never be made public.

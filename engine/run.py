@@ -217,7 +217,7 @@ def clip_picker(vertical):
 # ---------------- captions ----------------
 def caption(kind, rk, S, A, B):
     rname, sname, mean = RECITERS[rk]["name"], NAMES[S - 1], MEANINGS.get(S, "")
-    rtag = {"mishary": "#MisharyAlafasy", "abdulbasit_mujawwad": "#AbdulBasit"}.get(rk, "")
+    rtag = {"mishary": "#MisharyAlafasy", "abdulbasit_mujawwad": "#AbdulBasit", "husary": "#Husary", "minshawi": "#Minshawi", "shatri": "#AbuBakrAlShatri"}.get(rk, "")
     stag = "#Surah" + sname.replace("-", "").replace("'", "")
     ref = f"{S}:{A}-{B}" if A != B else f"{S}:{A}"
     if kind == "short":
@@ -477,7 +477,7 @@ def youtube_meta(rk, S, n_verses):
             f"Subscribe to The Quran Sounds for beautiful Quran recitations every day.\n\n"
             f"If you notice any error in this video, please let us know: {CFG['contact_email']}\n\n"
             f"#Quran #Surah{sname.replace('-', '').replace(chr(39), '')} #QuranRecitation")
-    short = {"mishary": "Mishary Alafasy"}.get(rk, rname)
+    short = {"mishary": "Mishary Alafasy", "husary": "Al-Husary", "minshawi": "Minshawi", "shatri": "Al-Shatri"}.get(rk, rname)
     tags = [f"Surah {sname}", f"Surah {sname} full", f"{sname} recitation", f"Surah {sname} {short}", rname, short,
             "Quran", "Quran recitation", "beautiful Quran recitation", "Quran with English translation",
             "Holy Quran", "Quran for sleep", "relaxing Quran", "Islam", "The Quran Sounds"]

@@ -13,10 +13,10 @@ def strip_bismillah(text, bism):
     return text
 U = "/mnt/user-data/uploads/"
 rk, S, mp3, tj = sys.argv[1], int(sys.argv[2]), sys.argv[3], sys.argv[4]
-EXPECT = {"mishary": "mishari_al_afasy", "abdulbasit": "abdul_baset", "abdulbasit_mujawwad": "abdul_baset/mujawwad", "abdulbasit_murattal": "abdul_baset/murattal"}
+EXPECT = {"mishary": "mishari_al_afasy", "abdulbasit": "abdul_baset", "abdulbasit_mujawwad": "abdul_baset/mujawwad", "abdulbasit_murattal": "abdul_baset/murattal", "husary": "khalil_al_husary/murattal", "minshawi": "siddiq_minshawi/murattal", "shatri": "abu_bakr_shatri/murattal", "rifai": "hani_ar_rifai/murattal"}
 raw = open(tj, encoding="utf-8").read()
 j = json.loads(raw)["audio_file"]; ts = j["timestamps"]
-txt = open(U + "f3c19cef-quran-uthmani.txt", encoding="utf-8").read().splitlines()
+txt = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "text", "quran-uthmani.txt"), encoding="utf-8").read().splitlines()
 Q = {int(l.split("|")[1]): l.split("|")[2].strip() for l in txt if l.startswith(f"{S}|")}
 b = [l.split("|")[2].strip() for l in txt if l.startswith("1|1|")][0]
 if S not in (1, 9): Q[1] = strip_bismillah(Q[1], b)
