@@ -40,7 +40,8 @@ def surahs():
             if appr.get("hold_verses"):
                 continue  # something still needs the owner's confirmation -> never used
             ts = json.load(open(sd / "timings.json"))["audio_file"]["timestamps"]
-            out.append({"reciter": rk, "surah": int(sd.name), "ts": ts, "dir": sd})
+            out.append({"reciter": rk, "surah": int(sd.name), "ts": ts, "dir": sd,
+                        "skip": set(appr.get("skip_verses", []))})   # verses that failed a check: never shown
     return out
 
 
@@ -78,7 +79,8 @@ def short_sequence(mode=30):
     """Interleave surahs/reciters (round-robin) so the feed stays varied; each surah advances in order."""
     streams = []
     for it in surahs():
-        s = [f"short:{it['reciter']}:{it['surah']}:{a}-{b}" for a, b in short_units(it, mode)]
+        s = [f"short:{it['reciter']}:{it['surah']}:{a}-{b}" for a, b in short_units(it, mode)
+             if not any(a <= v <= b for v in it.get("skip", ()))]
         if s: streams.append(s)
     order = CFG.get("stream_priority", [])
     streams.sort(key=lambda s: (order.index(":".join(s[0].split(":")[1:3])) if ":".join(s[0].split(":")[1:3]) in order else 99))
@@ -90,7 +92,7 @@ def short_sequence(mode=30):
 
 
 def long_sequence():
-    have = {f"{i['reciter']}:{i['surah']}" for i in surahs()}
+    have = {f"{i['reciter']}:{i['surah']}" for i in surahs() if not i.get("skip")}   # a full surah needs every verse verified
     return [f"long:{k}" for k in CFG["long_order"] if k in have]
 
 
@@ -217,7 +219,7 @@ def clip_picker(vertical):
 # ---------------- captions ----------------
 def caption(kind, rk, S, A, B):
     rname, sname, mean = RECITERS[rk]["name"], NAMES[S - 1], MEANINGS.get(S, "")
-    rtag = {"mishary": "#MisharyAlafasy", "abdulbasit_mujawwad": "#AbdulBasit", "husary": "#Husary", "minshawi": "#Minshawi", "shatri": "#AbuBakrAlShatri"}.get(rk, "")
+    rtag = {"mishary": "#MisharyAlafasy", "abdulbasit_mujawwad": "#AbdulBasit", "husary": "#Husary", "minshawi": "#Minshawi", "shatri": "#AbuBakrAlShatri", "shuraim": "#Shuraim", "sudais": "#Sudais"}.get(rk, "")
     stag = "#Surah" + sname.replace("-", "").replace("'", "")
     ref = f"{S}:{A}-{B}" if A != B else f"{S}:{A}"
     if kind == "short":
@@ -479,7 +481,7 @@ def youtube_meta(rk, S, n_verses):
             f"Subscribe to The Quran Sounds for beautiful Quran recitations every day.\n\n"
             f"If you notice any error in this video, please let us know: {CFG['contact_email']}\n\n"
             f"#Quran #Surah{sname.replace('-', '').replace(chr(39), '')} #QuranRecitation")
-    short = {"mishary": "Mishary Alafasy", "husary": "Al-Husary", "minshawi": "Minshawi", "shatri": "Al-Shatri"}.get(rk, rname)
+    short = {"mishary": "Mishary Alafasy", "husary": "Al-Husary", "minshawi": "Minshawi", "shatri": "Al-Shatri", "shuraim": "Shuraim", "sudais": "Sudais"}.get(rk, rname)
     tags = [f"Surah {sname}", f"Surah {sname} full", f"{sname} recitation", f"Surah {sname} {short}", rname, short,
             "Quran", "Quran recitation", "beautiful Quran recitation", "Quran with English translation",
             "Holy Quran", "Quran for sleep", "relaxing Quran", "Islam", "The Quran Sounds"]

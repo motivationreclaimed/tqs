@@ -21,6 +21,8 @@ RECITERS = {
     "husary": {"name": "Mahmoud Khalil Al-Husary", "url_key": "khalil_al_husary/murattal"},
     "minshawi": {"name": "Muhammad Siddiq Al-Minshawi", "url_key": "siddiq_minshawi/murattal"},
     "shatri": {"name": "Abu Bakr Al-Shatri", "url_key": "abu_bakr_shatri/murattal"},
+    "shuraim": {"name": "Saud Al-Shuraim", "url_key": "saud_ash-shuraym/murattal"},
+    "sudais": {"name": "Abdul Rahman Al-Sudais", "url_key": "abdurrahmaan_as_sudais/murattal"},
 }
 
 NAMES = ("Al-Fatihah,Al-Baqarah,Aal-Imran,An-Nisa,Al-Ma'idah,Al-An'am,Al-A'raf,Al-Anfal,At-Tawbah,Yunus,Hud,"

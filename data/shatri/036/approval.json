@@ -1,4 +1,7 @@
 {
- "verified": "Passed 2026-11-25: correct Quran.com recording, all verses in order, words match Tanzil text, every verse end on a pause",
- "sha256": "7518d8a115958daaa5f72701f14510307f18d18ccfb3e3ddcaf81ba98d9195ca"
+ "verified": "Passed 036 except: 36:65 word timings incomplete (8 of 11 words). Shorts containing these verses are never made; no full-surah long video.",
+ "sha256": "7518d8a115958daaa5f72701f14510307f18d18ccfb3e3ddcaf81ba98d9195ca",
+ "skip_verses": [
+  65
+ ]
 }

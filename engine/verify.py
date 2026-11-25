@@ -13,7 +13,7 @@ def strip_bismillah(text, bism):
     return text
 U = "/mnt/user-data/uploads/"
 rk, S, mp3, tj = sys.argv[1], int(sys.argv[2]), sys.argv[3], sys.argv[4]
-EXPECT = {"mishary": "mishari_al_afasy", "abdulbasit": "abdul_baset", "abdulbasit_mujawwad": "abdul_baset/mujawwad", "abdulbasit_murattal": "abdul_baset/murattal", "husary": "khalil_al_husary/murattal", "minshawi": "siddiq_minshawi/murattal", "shatri": "abu_bakr_shatri/murattal", "rifai": "hani_ar_rifai/murattal"}
+EXPECT = {"mishary": "mishari_al_afasy", "abdulbasit": "abdul_baset", "abdulbasit_mujawwad": "abdul_baset/mujawwad", "abdulbasit_murattal": "abdul_baset/murattal", "husary": "khalil_al_husary/murattal", "minshawi": "siddiq_minshawi/murattal", "shatri": "abu_bakr_shatri/murattal", "rifai": "hani_ar_rifai/murattal", "sudais": "abdurrahmaan_as_sudais/murattal", "shuraim": "saud_ash-shuraym/murattal", "minshawi_mujawwad": "siddiq_minshawi/mujawwad", "husary_muallim": "khalil_al_husary/muallim"}
 raw = open(tj, encoding="utf-8").read()
 j = json.loads(raw)["audio_file"]; ts = j["timestamps"]
 txt = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "text", "quran-uthmani.txt"), encoding="utf-8").read().splitlines()
@@ -25,7 +25,7 @@ mark = re.compile(r"^[ۖ-ۭ]+$")
 dur = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", mp3]))
 fails, notes = [], []
 if EXPECT[rk] not in j["audio_url"]: fails.append(f"audio_url is not {rk}: {j['audio_url']}")
-if j.get("chapter_id") != S or f"/{S}.mp3" not in j["audio_url"]: fails.append("surah number mismatch")
+if j.get("chapter_id") != S or not (f"/{S}.mp3" in j["audio_url"] or f"/{S:03d}.mp3" in j["audio_url"]): fails.append("surah number mismatch")
 if abs(ts[-1]["timestamp_to"] / 1000 - dur) > 0.5: fails.append(f"length mismatch: timings {ts[-1]['timestamp_to']/1000:.2f}s vs file {dur:.2f}s")
 if [t["verse_key"] for t in ts] != [f"{S}:{i}" for i in range(1, len(Q) + 1)]: fails.append("verses missing / out of order")
 for t in ts:
