@@ -196,15 +196,6 @@
    "scheduled_at": "2026-11-25T13:00:00Z"
   },
   {
-   "unit": "short:husary:67:1-3",
-   "mode": 60,
-   "cycle": 1,
-   "date": "2026-11-25",
-   "time_utc": "03:12",
-   "ref": "publer job 6b0651a8e9a6a63318d8efad (IG+TikTok+YT)",
-   "scheduled_at": "2026-11-25T19:00:00Z"
-  },
-  {
    "unit": "short:minshawi:67:1-5",
    "mode": 60,
    "cycle": 1,
@@ -223,24 +214,6 @@
    "scheduled_at": "2026-11-26T19:00:00Z"
   },
   {
-   "unit": "short:husary:18:6-10",
-   "mode": 60,
-   "cycle": 1,
-   "date": "2026-11-25",
-   "time_utc": "03:12",
-   "ref": "publer job 6b0651b922a2ee646d288668 (IG+TikTok+YT)",
-   "scheduled_at": "2026-11-27T13:00:00Z"
-  },
-  {
-   "unit": "short:husary:67:4-6",
-   "mode": 60,
-   "cycle": 1,
-   "date": "2026-11-25",
-   "time_utc": "03:12",
-   "ref": "publer job 6b0651d24e667d7eb997e18b (IG+TikTok+YT)",
-   "scheduled_at": "2026-11-27T19:00:00Z"
-  },
-  {
    "unit": "short:minshawi:67:6-10",
    "mode": 60,
    "cycle": 1,
@@ -257,24 +230,6 @@
    "time_utc": "03:12",
    "ref": "publer job 6b0651e5c225c1163f0cf0d0 (IG+TikTok+YT)",
    "scheduled_at": "2026-11-28T19:00:00Z"
-  },
-  {
-   "unit": "short:husary:18:11-14",
-   "mode": 60,
-   "cycle": 1,
-   "date": "2026-11-25",
-   "time_utc": "03:12",
-   "ref": "publer job 6b0651ee732fed835d6a2ebf (IG+TikTok+YT)",
-   "scheduled_at": "2026-11-29T16:00:00Z"
-  },
-  {
-   "unit": "short:husary:67:7-9",
-   "mode": 60,
-   "cycle": 1,
-   "date": "2026-11-25",
-   "time_utc": "03:12",
-   "ref": "publer job 6b0651f64e667d7eb997e1bb (IG+TikTok+YT)",
-   "scheduled_at": "2026-11-30T16:00:00Z"
   }
  ],
  "failures": [
@@ -347,6 +302,31 @@
    "unit": "short60-render",
    "date": "2026-11-25",
    "reason": "audio is not the pure recitation (corr 0.9111 vs reference 1.0000, difference 7.7 dB vs reference 42.3 dB, lead-in 0.0 dB)"
+  },
+  {
+   "unit": "short:husary:67:1-3",
+   "date": "2026-11-25",
+   "reason": "Husary paused; owner deletes this scheduled post in Publer; slot freed"
+  },
+  {
+   "unit": "short:husary:18:6-10",
+   "date": "2026-11-25",
+   "reason": "Husary paused; owner deletes this scheduled post in Publer; slot freed"
+  },
+  {
+   "unit": "short:husary:67:4-6",
+   "date": "2026-11-25",
+   "reason": "Husary paused; owner deletes this scheduled post in Publer; slot freed"
+  },
+  {
+   "unit": "short:husary:18:11-14",
+   "date": "2026-11-25",
+   "reason": "Husary paused; owner deletes this scheduled post in Publer; slot freed"
+  },
+  {
+   "unit": "short:husary:67:7-9",
+   "date": "2026-11-25",
+   "reason": "Husary paused; owner deletes this scheduled post in Publer; slot freed"
   }
  ],
  "short_cycle": 1,
