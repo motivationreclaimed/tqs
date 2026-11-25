@@ -1,65 +1,36 @@
 {
- "note": "Rendered and uploaded to the Publer library but NOT scheduled (Publer free plan: max 10 scheduled posts per account). Schedule these with create_post as soon as slots free up or the plan is upgraded. w1_08_long still needs hosting + upload.",
+ "note": "Rendered (fixed centred layout), checked and already in the Publer library. Only create_post is needed, with these exact values, once each account has a free slot (free plan: 10 scheduled per account). Skip any whose time has passed.",
  "posts": [
   {
    "id": "w1_12_mid",
-   "shape": "portrait",
-   "name": "tdh-w1-12-mid-portrait.mp4",
-   "accounts": [
-    "6b0645f14e667d7eb997d0bf",
-    "6b064625e9a6a63318d8e109"
-   ],
    "when": "2026-12-01T19:00:00Z",
-   "text": "Dua for Travelling | Arabic, Transliteration & English\n\nIn this video you will learn:\n- Dua for Travelling (Hisn al-Muslim 207)\n\nIf you notice any mistake or issue in this video, please contact us at tdh@reclaivo.com\n\nRecitation: Muhammad Jumah for OpenDua\nArabic, transliteration and translation: OpenDua (opendua.org), CC BY 4.0\nSource: Hisn al-Muslim (Fortress of the Muslim) by Sa'id bin Ali bin Wahf Al-Qahtani\n\n#dua #islam #hisnulmuslim #theduahour #travel",
-   "url": "https://cdn.jsdelivr.net/gh/motivationreclaimed/tqs@3ea79b22459864c328b665fd75212f606da92708/tdh-w1-12-mid-portrait.mp4",
-   "media_id": "6b06576167a8b92dae034340"
-  },
-  {
-   "id": "w1_12_mid",
-   "shape": "landscape",
-   "name": "tdh-w1-12-mid-landscape.mp4",
    "accounts": [
     "6b06464ac225c1163f0ce0ef"
    ],
-   "when": "2026-12-01T19:00:00Z",
-   "text": "Dua for Travelling | Arabic, Transliteration & English\n\nIn this video you will learn:\n- Dua for Travelling (Hisn al-Muslim 207)\n\nIf you notice any mistake or issue in this video, please contact us at tdh@reclaivo.com\n\nRecitation: Muhammad Jumah for OpenDua\nArabic, transliteration and translation: OpenDua (opendua.org), CC BY 4.0\nSource: Hisn al-Muslim (Fortress of the Muslim) by Sa'id bin Ali bin Wahf Al-Qahtani\n\n#dua #islam #hisnulmuslim #theduahour #travel",
-   "url": "https://motivationreclaimed.github.io/tqs/tdh/tdh-w1-12-mid-landscape.mp4",
-   "media_id": "6b06576b67a8b92dae034352"
+   "media_id": "6b06daa7dc236075096403b7",
+   "text": "Dua for Travelling | Arabic, Transliteration & English\n\nIn this video you will learn:\n- Dua for Travelling (Hisn al-Muslim 207)\n\nIf you notice any mistake or issue in this video, please contact us at tdh@reclaivo.com\n\nRecitation: Muhammad Jumah for OpenDua\nArabic, transliteration and translation: OpenDua (opendua.org), CC BY 4.0\nSource: Hisn al-Muslim (Fortress of the Muslim) by Sa'id bin Ali bin Wahf Al-Qahtani\n\n#dua #islam #hisnulmuslim #theduahour #travel"
+  },
+  {
+   "id": "w1_13_short",
+   "when": "2026-12-02T08:00:00Z",
+   "accounts": [
+    "6b0645f14e667d7eb997d0bf",
+    "6b064625e9a6a63318d8e109",
+    "6b06464ac225c1163f0ce0ef"
+   ],
+   "media_id": "6b06dab5e01471e65373ae22",
+   "text": "Dua in Sujood | Hisn al-Muslim 42\n\nDua in Sujood (Hisn al-Muslim 42). Learn this dua from the Sunnah:\nHow perfect You are O Allah, our Lord, and I praise You. O Allah, forgive me.\n\nIf you notice any mistake or issue in this video, please contact us at tdh@reclaivo.com\n\nRecitation: Muhammad Jumah for OpenDua\nArabic, transliteration and translation: OpenDua (opendua.org), CC BY 4.0\nSource: Hisn al-Muslim (Fortress of the Muslim) by Sa'id bin Ali bin Wahf Al-Qahtani\n\n#dua #islam #hisnulmuslim #theduahour #salah"
   },
   {
    "id": "w1_14_mid",
-   "shape": "portrait",
-   "name": "tdh-w1-14-mid-portrait.mp4",
+   "when": "2026-12-02T19:00:00Z",
    "accounts": [
     "6b0645f14e667d7eb997d0bf",
-    "6b064625e9a6a63318d8e109"
-   ],
-   "when": "2026-12-02T19:00:00Z",
-   "text": "4 Duas for Rain and Weather | Arabic, Transliteration & English\n\nWhat you will hear:\n- Dua When It Thunders (Hisn al-Muslim 168)\n- Dua for Rain (Hisn al-Muslim 171)\n- Dua After the Rain (Hisn al-Muslim 173)\n- Dua for the New Moon (Hisn al-Muslim 175)\n\nIf you notice any mistake or issue in this video, please contact us at tdh@reclaivo.com\n\nRecitation: Muhammad Jumah for OpenDua\nArabic, transliteration and translation: OpenDua (opendua.org), CC BY 4.0\nSource: Hisn al-Muslim (Fortress of the Muslim) by Sa'id bin Ali bin Wahf Al-Qahtani\n\n#dua #islam #hisnulmuslim #theduahour #rain",
-   "url": "https://cdn.jsdelivr.net/gh/motivationreclaimed/tqs@3ea79b22459864c328b665fd75212f606da92708/tdh-w1-14-mid-portrait.mp4",
-   "media_id": "6b06577667a8b92dae0343e9"
-  },
-  {
-   "id": "w1_14_mid",
-   "shape": "landscape",
-   "name": "tdh-w1-14-mid-landscape.mp4",
-   "accounts": [
+    "6b064625e9a6a63318d8e109",
     "6b06464ac225c1163f0ce0ef"
    ],
-   "when": "2026-12-02T19:00:00Z",
-   "text": "4 Duas for Rain and Weather | Arabic, Transliteration & English\n\nWhat you will hear:\n- Dua When It Thunders (Hisn al-Muslim 168)\n- Dua for Rain (Hisn al-Muslim 171)\n- Dua After the Rain (Hisn al-Muslim 173)\n- Dua for the New Moon (Hisn al-Muslim 175)\n\nIf you notice any mistake or issue in this video, please contact us at tdh@reclaivo.com\n\nRecitation: Muhammad Jumah for OpenDua\nArabic, transliteration and translation: OpenDua (opendua.org), CC BY 4.0\nSource: Hisn al-Muslim (Fortress of the Muslim) by Sa'id bin Ali bin Wahf Al-Qahtani\n\n#dua #islam #hisnulmuslim #theduahour #rain",
-   "url": "https://cdn.jsdelivr.net/gh/motivationreclaimed/tqs@3ea79b22459864c328b665fd75212f606da92708/tdh-w1-14-mid-landscape.mp4",
-   "media_id": "6b065786e01471e6537289ec"
-  }
- ],
- "not_uploaded": [
-  {
-   "id": "w1_08_long",
-   "shape": "landscape",
-   "when": "2026-11-29T19:00:00Z",
-   "accounts": [
-    "6b06464ac225c1163f0ce0ef"
-   ]
+   "media_id": "6b06dac2e01471e65373ae58",
+   "text": "4 Duas for Rain and Weather | Arabic, Transliteration & English\n\nWhat you will hear:\n- Dua When It Thunders (Hisn al-Muslim 168)\n- Dua for Rain (Hisn al-Muslim 171)\n- Dua After the Rain (Hisn al-Muslim 173)\n- Dua for the New Moon (Hisn al-Muslim 175)\n\nIf you notice any mistake or issue in this video, please contact us at tdh@reclaivo.com\n\nRecitation: Muhammad Jumah for OpenDua\nArabic, transliteration and translation: OpenDua (opendua.org), CC BY 4.0\nSource: Hisn al-Muslim (Fortress of the Muslim) by Sa'id bin Ali bin Wahf Al-Qahtani\n\n#dua #islam #hisnulmuslim #theduahour #rain"
   }
  ]
 }
