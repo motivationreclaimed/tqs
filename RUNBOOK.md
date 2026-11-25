@@ -89,3 +89,5 @@ Only Mahmoud Khalil Al-Husary, Muhammad Siddiq Al-Minshawi and Abu Bakr Al-Shatr
 (`disabled_reciters`: mishary, abdulbasit_mujawwad). Hani Ar-Rifai failed verification (verse ends not on pauses).
 Long-video thumbnails for these reciters have no photo (text only). The Mishary Ar-Rahman long video (V1RxExsYOnQ)
 stays PRIVATE and must never be made public.
+- Long videos over 25 minutes are rendered in CALM mode (backgrounds 2.5x slower, 12 fps, 720p, AAC 96k) so the
+  full surah fits the 100 MB hosting limit with sharp text. Owner wants full length, fully automatic.

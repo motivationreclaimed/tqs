@@ -30,12 +30,12 @@ def band_png(path, size, top, bot):
     im = Image.new("RGBA", size, (0, 0, 0, 0)); im.putalpha(m); im.save(path)
 
 
-def plan_background(total, pick_clip):
-    """pick_clip() -> (path, seconds). Each clip plays <=15 s and is swapped before it could run out."""
+def plan_background(total, pick_clip, slow=1.0):
+    """pick_clip() -> (path, seconds). Each clip plays <=15 s (x slow) and is swapped before it could run out."""
     segs, t0 = [], 0.0
     while t0 < total - 0.01:
-        path, dur = pick_clip()
-        use = max(2.5, min(15.0, dur - XF - 0.6))
+        path, dur = pick_clip(); dur *= slow
+        use = max(2.5, min(15.0 * slow, dur - XF - 0.6))
         if total - (t0 + use) < 3.0 and (total - t0) + XF + 0.2 <= dur:
             use = total - t0
         segs.append((t0, min(total, t0 + use), path, dur)); t0 += use
@@ -96,7 +96,11 @@ def render(kind, S, A, B, timings, audio, out, reciter_name, pick_clip, channel=
     band = os.path.join(work, "band.png")
     band_png(band, (W, H), min(top, ref_y - 60), max(bot, brand_y + 70))
 
-    segs = plan_background(total, pick_clip)
+    # CALM mode for very long surahs (> 25 min): backgrounds play 2.5x slower at 12 fps in 720p so the full
+    # video still fits the 100 MB hosting limit with clean, sharp text (owner: full length, fully automatic)
+    calm = (not vertical) and (total > 1500 or os.environ.get("TQS_CALM") == "1")
+    slow = 2.5 if calm else 1.0
+    segs = plan_background(total, pick_clip, slow)
     base = ("crop=ih*9/16:ih,scale=1080:1920:flags=lanczos" if vertical
             else "scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080")
     FIN, FOUT = 0.3, (1.0 if vertical else 2.5)
@@ -126,20 +130,23 @@ def render(kind, S, A, B, timings, audio, out, reciter_name, pick_clip, channel=
         for i, (s0, s1, path, dur) in enumerate(segs):
             L = s1 - s0; p = os.path.join(work, f"seg{i:04d}.mp4")
             subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", path, "-t", f"{L:.3f}", "-an", "-vf",
-                            f"{base},{GRADE},fps=24," + ("" if i == 0 else "fade=in:0:d=0.7,") + f"fade=out:st={max(0, L - 0.7):.3f}:d=0.7,format=yuv420p",
+                            (f"setpts={slow}*PTS," if calm else "") + f"{base},{GRADE},fps={12 if calm else 24}," + ("" if i == 0 else "fade=in:0:d=0.7,") + f"fade=out:st={max(0, L - 0.7):.3f}:d=0.7,format=yuv420p",
                             "-c:v", "libx264", "-preset", "veryfast", "-crf", "16", p], check=True)
             parts.append(p)
         lst = os.path.join(work, "list.txt")
         open(lst, "w").write("".join(f"file '{p}'\n" for p in parts))
         bg = os.path.join(work, "bg.mp4")
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", lst, "-c", "copy", bg], check=True)
-        vbit = max(300, int(88e6 * 8 / total / 1000) - 128)   # file under ~90 MB (GitHub limit 100 MB); AV1 gives about twice the quality of H.264 at this size
+        abit = 96 if calm else 128
+        budget_total = float(os.environ.get("TQS_BUDGET_SECONDS", total))   # test hook: simulate a longer video's budget
+        vbit = int(88e6 * 8 / budget_total / 1000) - abit
+        vbit = max(300, vbit) if not calm else vbit   # file under ~90 MB (GitHub limit 100 MB); AV1 gives about twice the quality of H.264 at this size
         fl = (f"[1:v]format=rgba[band];[0:v]trim=0:{total:.3f},setpts=PTS-STARTPTS[bg];[bg][band]overlay=0:0,"
-              f"ass={ass}:fontsdir={FONTS},fade=out:st={total - FOUT - 0.2:.3f}:d={FOUT},format=yuv420p[v];"
+              f"ass={ass}:fontsdir={FONTS},fade=out:st={total - FOUT - 0.2:.3f}:d={FOUT}," + ("scale=1280:720:flags=lanczos," if calm else "") + "format=yuv420p[v];"
               f"[2:a]{audio_f}[a]")
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", bg, "-loop", "1", "-i", band, "-i", audio,
                         "-filter_complex", fl, "-map", "[v]", "-map", "[a]", "-t", f"{total:.3f}",
                         "-c:v", "libsvtav1", "-preset", "8", "-b:v", f"{vbit}k", "-svtav1-params", "tune=0",
-                        "-r", "24", "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart",
+                        "-r", "12" if calm else "24", "-c:a", "aac", "-b:a", f"{abit}k", "-movflags", "+faststart",
                         str(out)], check=True)
     return {"seconds": round(total, 1), "verses": f"{S}:{A}-{B}", "clips": [os.path.basename(s[2]) for s in segs]}
