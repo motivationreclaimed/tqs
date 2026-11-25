@@ -1,0 +1,3 @@
+out_week*/
+*.pyc
+__pycache__/
