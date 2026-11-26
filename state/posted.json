@@ -266,6 +266,15 @@
    "time_utc": "18:45",
    "ref": "publer job 6b072cb040ddf680c439a1d5 (IG+TikTok+YT)",
    "scheduled_at": "2026-12-01T16:00:00Z"
+  },
+  {
+   "unit": "short:shatri:67:6-10",
+   "mode": 60,
+   "cycle": 1,
+   "date": "2026-11-26",
+   "time_utc": "18:50",
+   "ref": "publer job 6b087f172ced69845f0fa4c5 (IG+TikTok+YT)",
+   "scheduled_at": "2026-12-03T16:00:00Z"
   }
  ],
  "failures": [
@@ -428,6 +437,41 @@
    "unit": "short:minshawi:55:8-13",
    "date": "2026-11-26",
    "reason": "Minshawi removed (blocked). Owner deletes scheduled post in Publer."
+  },
+  {
+   "unit": "short:sudais:55:1-9",
+   "date": "2026-11-26",
+   "reason": "verse boundary at 3.66s is not on a pause"
+  },
+  {
+   "unit": "short:sudais:55:1-15",
+   "date": "2026-11-26",
+   "reason": "verse boundary at 3.66s is not on a pause"
+  },
+  {
+   "unit": "short:sudais:55:1-9",
+   "date": "2026-11-26",
+   "reason": "verse boundary at 3.66s is not on a pause"
+  },
+  {
+   "unit": "short:sudais:55:1-15",
+   "date": "2026-11-26",
+   "reason": "verse boundary at 3.66s is not on a pause"
+  },
+  {
+   "unit": "short:shatri:36:7-8",
+   "date": "2026-11-26",
+   "reason": "Publer slot still occupied by an undeleted Minshawi post (one minute gap error); owner asked to delete it"
+  },
+  {
+   "unit": "short:shatri:36:10-14",
+   "date": "2026-11-26",
+   "reason": "Publer slot still occupied by an undeleted Minshawi post (one minute gap error); owner asked to delete it"
+  },
+  {
+   "unit": "short:shatri:67:3-4",
+   "date": "2026-11-26",
+   "reason": "Publer slot still occupied by an undeleted Minshawi post (one minute gap error); owner asked to delete it"
   }
  ],
  "short_cycle": 1,
