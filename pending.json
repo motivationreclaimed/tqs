@@ -2,15 +2,6 @@
  "note": "Rendered (fixed centred layout), checked and already in the Publer library. Only create_post is needed, with these exact values, once each account has a free slot (free plan: 10 scheduled per account). Skip any whose time has passed.",
  "posts": [
   {
-   "id": "w1_12_mid",
-   "when": "2026-12-01T19:00:00Z",
-   "accounts": [
-    "6b06464ac225c1163f0ce0ef"
-   ],
-   "media_id": "6b06daa7dc236075096403b7",
-   "text": "Dua for Travelling | Arabic, Transliteration & English\n\nIn this video you will learn:\n- Dua for Travelling (Hisn al-Muslim 207)\n\nIf you notice any mistake or issue in this video, please contact us at tdh@reclaivo.com\n\nRecitation: Muhammad Jumah for OpenDua\nArabic, transliteration and translation: OpenDua (opendua.org), CC BY 4.0\nSource: Hisn al-Muslim (Fortress of the Muslim) by Sa'id bin Ali bin Wahf Al-Qahtani\n\n#dua #islam #hisnulmuslim #theduahour #travel"
-  },
-  {
    "id": "w1_13_short",
    "when": "2026-12-02T08:00:00Z",
    "accounts": [
