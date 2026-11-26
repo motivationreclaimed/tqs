@@ -6,9 +6,7 @@
  "first_long_date": "2026-11-15",
  "long_every_days": 7,
  "long_order": [
-  "minshawi:67",
   "shatri:67",
-  "minshawi:55",
   "sudais:55"
  ],
  "stream_priority": [
@@ -58,9 +56,10 @@
  "disabled_reciters": [
   "abdulbasit_mujawwad",
   "husary",
+  "minshawi",
   "mishary"
  ],
- "disabled_reciters_note": "25 Nov 2026 (owner): only Husary, Minshawi and Al-Shatri for now (Mishary and Abdul Basit get claimed/blocked). Hani Ar-Rifai failed verification. 25 Nov: Husary blocked on YouTube too -> paused.",
+ "disabled_reciters_note": "25 Nov 2026 (owner): only Husary, Minshawi and Al-Shatri for now (Mishary and Abdul Basit get claimed/blocked). Hani Ar-Rifai failed verification. 25 Nov: Husary blocked on YouTube too -> paused. 26 Nov: Minshawi blocked too -> removed.",
  "long_short_min_seconds": 61,
  "long_short_max_seconds": 100,
  "short_mix_note": "Half of the Shorts are 61 s+ (alternating), for TikTok monetisation (owner, 20 Nov 2026).",

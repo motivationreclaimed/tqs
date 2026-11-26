@@ -214,24 +214,6 @@
    "scheduled_at": "2026-11-26T13:00:00Z"
   },
   {
-   "unit": "short:minshawi:67:1-2",
-   "mode": 30,
-   "cycle": 1,
-   "date": "2026-11-25",
-   "time_utc": "18:45",
-   "ref": "publer job 6b072c6ac225c1163f0eb5a4 (IG+TikTok+YT)",
-   "scheduled_at": "2026-11-26T19:00:00Z"
-  },
-  {
-   "unit": "short:minshawi:67:1-5",
-   "mode": 60,
-   "cycle": 1,
-   "date": "2026-11-25",
-   "time_utc": "18:45",
-   "ref": "publer job 6b072c76732fed835d6bf2e3 (IG+TikTok+YT)",
-   "scheduled_at": "2026-11-27T13:00:00Z"
-  },
-  {
    "unit": "short:shatri:36:1-6",
    "mode": 30,
    "cycle": 1,
@@ -284,25 +266,6 @@
    "time_utc": "18:45",
    "ref": "publer job 6b072cb040ddf680c439a1d5 (IG+TikTok+YT)",
    "scheduled_at": "2026-12-01T16:00:00Z"
-  },
-  {
-   "unit": "long:minshawi:67",
-   "mode": 0,
-   "cycle": 1,
-   "date": "2026-11-25",
-   "time_utc": "19:24",
-   "ref": "youtube 0pFJ8vFZW7c (private until 2026-11-29T13:00:00Z)",
-   "scheduled_at": "2026-11-29T13:00:00Z",
-   "youtube_private": "0pFJ8vFZW7c"
-  },
-  {
-   "unit": "short:minshawi:55:8-13",
-   "mode": 30,
-   "cycle": 1,
-   "date": "2026-11-26",
-   "time_utc": "02:24",
-   "ref": "job 6b07984613ddc5f7743427b5",
-   "scheduled_at": "2026-12-02T16:00:00Z"
   }
  ],
  "failures": [
@@ -445,6 +408,26 @@
    "unit": "short:sudais:55:1-9",
    "date": "2026-11-26",
    "reason": "verse boundary at 3.66s is not on a pause"
+  },
+  {
+   "unit": "short:minshawi:67:1-2",
+   "date": "2026-11-26",
+   "reason": "Minshawi removed (blocked). Owner deletes scheduled post in Publer."
+  },
+  {
+   "unit": "short:minshawi:67:1-5",
+   "date": "2026-11-26",
+   "reason": "Minshawi removed (blocked). Owner deletes scheduled post in Publer."
+  },
+  {
+   "unit": "long:minshawi:67",
+   "date": "2026-11-26",
+   "reason": "Minshawi removed (blocked). Long video stays PRIVATE: 0pFJ8vFZW7c"
+  },
+  {
+   "unit": "short:minshawi:55:8-13",
+   "date": "2026-11-26",
+   "reason": "Minshawi removed (blocked). Owner deletes scheduled post in Publer."
   }
  ],
  "short_cycle": 1,
