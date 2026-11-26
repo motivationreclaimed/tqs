@@ -380,7 +380,7 @@ def plan_batch(max_items=14):
     taken = {(p.get("scheduled_at") or "")[:16] for p in log["posts"]}
     now = dt.datetime.now(dt.timezone.utc) + dt.timedelta(minutes=30)
     end = now + dt.timedelta(days=CFG["schedule_ahead_days"])
-    items, used = [], set()
+    items, used, bad = [], set(), set()
     # Publer free plan: at most 10 scheduled posts per account at a time
     pending = sum(1 for p in log["posts"] if p["unit"].startswith("short:") and (p.get("scheduled_at") or "") > now.strftime("%Y-%m-%dT%H:%M"))
     max_items = min(max_items, CFG.get("publer_max_scheduled", 10) - pending)
@@ -393,12 +393,18 @@ def plan_batch(max_items=14):
         # long videos are NOT planned here: they go straight to YouTube (python3 run.py long)
         it = None
         for m in (mode, 90 - mode):          # if one length fails or has nothing, use the other
-            try:
-                unit, cyc = next_unit("short", skip=used, mode=m)
-                it = make("short", unit, cyc); it["mode"], it["cycle"] = m, cyc
+            for _ in range(6):                 # a unit that fails its check is skipped: try the next one (rule 1)
+                unit = None
+                try:
+                    unit, cyc = next_unit("short", skip=used | bad, mode=m)
+                    it = make("short", unit, cyc); it["mode"], it["cycle"] = m, cyc
+                    break
+                except Exception as e:  # never stop: record it and try the next unit / the other kind of Short
+                    failed(unit or f"short{m}-render", str(e))
+                    if unit is None: break
+                    bad.add(unit)
+            if it is not None:
                 break
-            except Exception as e:  # never stop: record it and try the other kind of Short
-                failed(f"short{m}-render", str(e))
         if it is None:
             continue
         mode = int(forced) if forced else 90 - it["mode"]

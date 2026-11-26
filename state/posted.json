@@ -294,6 +294,15 @@
    "ref": "youtube 0pFJ8vFZW7c (private until 2026-11-29T13:00:00Z)",
    "scheduled_at": "2026-11-29T13:00:00Z",
    "youtube_private": "0pFJ8vFZW7c"
+  },
+  {
+   "unit": "short:minshawi:55:8-13",
+   "mode": 30,
+   "cycle": 1,
+   "date": "2026-11-26",
+   "time_utc": "02:24",
+   "ref": "job 6b07984613ddc5f7743427b5",
+   "scheduled_at": "2026-12-02T16:00:00Z"
   }
  ],
  "failures": [
@@ -420,6 +429,21 @@
   {
    "unit": "short60-render",
    "date": "2026-11-25",
+   "reason": "verse boundary at 3.66s is not on a pause"
+  },
+  {
+   "unit": "short30-render",
+   "date": "2026-11-26",
+   "reason": "verse boundary at 3.66s is not on a pause"
+  },
+  {
+   "unit": "short60-render",
+   "date": "2026-11-26",
+   "reason": "verse boundary at 3.66s is not on a pause"
+  },
+  {
+   "unit": "short:sudais:55:1-9",
+   "date": "2026-11-26",
    "reason": "verse boundary at 3.66s is not on a pause"
   }
  ],
