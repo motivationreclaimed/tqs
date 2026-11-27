@@ -3,6 +3,15 @@ then the thumbnail frame, ambience and fade-out are added in a final pass."""
 import math, os, subprocess, json
 from build import (FMT, NATURE, SFX, entry_segments, split_words, render_page, render_thumb, bg_filter, dur)
 
+# Echo on the recitation (owner request). "" = off.
+ECHO_PRESETS = {
+    "off": "",
+    "light": "aecho=0.85:0.8:70|140:0.22|0.12",
+    "medium": "aecho=0.85:0.85:90|180|270:0.32|0.2|0.1",
+    "strong": "aecho=0.8:0.9:110|220|330|440|550:0.45|0.33|0.23|0.15|0.09",
+}
+ECHO = ECHO_PRESETS["strong"]  # owner chose stronger than medium (27 Nov)
+
 ENC = ["-c:v", "libx264", "-preset", "veryfast", "-crf", "21", "-pix_fmt", "yuv420p", "-r", "30"]
 
 
@@ -51,7 +60,7 @@ def make_part(fmt, n, out, clip, page_title, lead=1.0, tail=1.2, first_start=0.0
     for k in range(len(segs)):
         pad = "apad=pad_dur=0.6," if k < len(segs) - 1 else ""
         fc.append(f"[{ai+k}:a]aformat=sample_rates=44100:channel_layouts=stereo,{pad}asetpts=PTS-STARTPTS[s{k}]"); parts.append(f"[s{k}]")
-    fc.append(f"{''.join(parts)}concat=n={len(segs)}:v=0:a=1,loudnorm=I=-16:TP=-1.5,aresample=44100,adelay={int(lead*1000)}:all=1,apad,atrim=0:{T:.3f}[a]")
+    fc.append(f"{''.join(parts)}concat=n={len(segs)}:v=0:a=1,{ECHO + "," if ECHO else ""}loudnorm=I=-16:TP=-1.5,aresample=44100,adelay={int(lead*1000)}:all=1,apad,atrim=0:{T:.3f}[a]")
     cmd += ["-filter_complex", ";".join(fc), "-map", "[v]", "-map", "[a]", "-t", f"{T:.3f}", *ENC,
             "-c:a", "aac", "-b:a", "160k", "-ar", "44100", out]
     _run(cmd)

@@ -16,7 +16,7 @@ So this run happens every day and tops the queue back up, one slot at a time, in
 3. Every 4 weeks: a 1-hour video combining that month's Shorts plus more duas, grouped by category
    (not mixed). Over 100 MB, so it cannot be hosted automatically: render it and tell the owner.
 4. Style: dark tinted nature clip, Amiri Arabic, transliteration, English, "RECITED BY MUHAMMAD JUMAH",
-   "THE DUA HOUR". Frame 0 is the thumbnail (no fade-in). Fade-out at the end. Quiet nature sound under the
+   "THE DUA HOUR". Frame 0 is the thumbnail (no fade-in). Fade-out at the end. Strong echo on the recitation (video2.ECHO = "strong"). Quiet nature sound under the
    recitation (fire, rain, stream, birds, wind; 1 or 2 at random). Portrait text block is centred on the screen (x 540, y 960) inside y 480 to 1440 with about 170 px clear on each side (TikTok/Instagram buttons); never move it towards the top.
 5. Captions: NO emojis, NO em or en dashes, MAX 5 hashtags, first line = YouTube title (max 95 characters),
    every title unique, and ALWAYS the line
