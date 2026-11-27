@@ -230,6 +230,78 @@
    "time_utc": "20:06",
    "ref": "publer post_now group gr_c6ba4f0e8988e6cdf3a668e5; youtube TK1Wic8YSZA",
    "scheduled_at": "2026-11-27T20:06:15Z"
+  },
+  {
+   "unit": "short:mishary:2:4-5",
+   "mode": 30,
+   "cycle": 1,
+   "date": "2026-11-27",
+   "time_utc": "20:26",
+   "ref": "publer job 6b09e7845331e472c40b4789",
+   "scheduled_at": "2026-11-28T13:00:00Z"
+  },
+  {
+   "unit": "short:abdulbasit_mujawwad:97:3-4",
+   "mode": 30,
+   "cycle": 1,
+   "date": "2026-11-27",
+   "time_utc": "20:27",
+   "ref": "publer job 6b09e7a3362d3845c33511ea",
+   "scheduled_at": "2026-11-28T19:00:00Z"
+  },
+  {
+   "unit": "short:abdulbasit_mujawwad:93:6-7",
+   "mode": 30,
+   "cycle": 1,
+   "date": "2026-11-27",
+   "time_utc": "20:32",
+   "ref": "publer job 6b09e82d5c01ee0ea7146964",
+   "scheduled_at": "2026-11-29T16:00:00Z"
+  },
+  {
+   "unit": "short:mishary:2:6-7",
+   "mode": 30,
+   "cycle": 1,
+   "date": "2026-11-27",
+   "time_utc": "20:32",
+   "ref": "publer job 6b09e857b4103b2e3a56db91",
+   "scheduled_at": "2026-11-30T16:00:00Z"
+  },
+  {
+   "unit": "short:abdulbasit_mujawwad:97:5-5",
+   "mode": 30,
+   "cycle": 1,
+   "date": "2026-11-27",
+   "time_utc": "20:32",
+   "ref": "publer job 6b09e879b4103b2e3a56dc00",
+   "scheduled_at": "2026-12-01T16:00:00Z"
+  },
+  {
+   "unit": "short:mishary:67:7-8",
+   "mode": 30,
+   "cycle": 1,
+   "date": "2026-11-27",
+   "time_utc": "20:32",
+   "ref": "publer job 6b09e89e362d3845c335145e",
+   "scheduled_at": "2026-12-02T16:00:00Z"
+  },
+  {
+   "unit": "short:mishary:36:10-11",
+   "mode": 30,
+   "cycle": 1,
+   "date": "2026-11-27",
+   "time_utc": "20:32",
+   "ref": "publer job 6b09e8c35331e472c40b4a32",
+   "scheduled_at": "2026-12-03T16:00:00Z"
+  },
+  {
+   "unit": "short:abdulbasit_mujawwad:93:8-9",
+   "mode": 30,
+   "cycle": 1,
+   "date": "2026-11-27",
+   "time_utc": "20:32",
+   "ref": "publer job 6b09e8db362d3845c3351527",
+   "scheduled_at": "2026-12-04T16:00:00Z"
   }
  ],
  "failures": [

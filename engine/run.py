@@ -346,7 +346,12 @@ def audio_purity(video, audio, ts, A, B, lead):
     if len(streams) != 1:
         raise RuntimeError(f"video has {len(streams)} audio tracks (must be exactly 1: the recitation)")
     a0, a1 = ts[A - 1]["timestamp_from"] / 1000, ts[B - 1]["timestamp_to"] / 1000
-    a = pcm(audio, a0, a1 - a0); v = pcm(video)
+    from render import ECHO   # the video's audio = original recitation + the house echo, nothing else
+    def pcm_echo(src):
+        cmd = ["ffmpeg", "-loglevel", "error", "-i", str(src), "-af", f"atrim={a0:.3f}:{a1:.3f},asetpts=PTS-STARTPTS,{ECHO}",
+               "-ac", "1", "-ar", "16000", "-f", "s16le", "-"]
+        return np.frombuffer(subprocess.run(cmd, capture_output=True, check=True).stdout, np.int16).astype(float)
+    a = pcm_echo(audio)[:int((a1 - a0) * 16000)]; v = pcm(video)
     L = int(lead * 16000); seg = v[L:L + len(a)]; n = min(len(seg), len(a)); seg, a = seg[:n], a[:n]
     def score(x, ref):
         m = min(len(x), len(ref)); x, ref = x[:m], ref[:m]
@@ -360,8 +365,8 @@ def audio_purity(video, audio, ts, A, B, lead):
     br = int(br) if br.isdigit() else 192000
     import tempfile
     ref_p = tempfile.mktemp(suffix=".m4a")
-    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(audio), "-ss", str(a0), "-t", str(a1 - a0),
-                    "-c:a", "aac", "-b:a", str(br), ref_p], check=True)
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(audio),
+                    "-af", f"atrim={a0:.3f}:{a1:.3f},asetpts=PTS-STARTPTS,{ECHO}", "-c:a", "aac", "-b:a", str(br), ref_p], check=True)
     b_corr, b_db = score(pcm(ref_p), a)
     lead_db = 20 * np.log10(np.sqrt((v[:max(1, L - 800)] ** 2).mean()) + 1)
     if corr < 0.95 or corr < b_corr - 0.0005 or extra_db < b_db - 1.0 or lead_db > 6:   # relative to the reference: 64 kbps sources lose more in AAC

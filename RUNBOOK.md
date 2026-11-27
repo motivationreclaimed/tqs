@@ -99,3 +99,5 @@ stays PRIVATE and must never be made public.
   (`run.py long` prints SKIP) and the Sunday publish task has nothing to do.
 - A Short longer than 40 s goes to Instagram + TikTok only (plan.json `publer_account_ids` already leaves YouTube out).
 - Never repeat verses already posted (any reciter): `next_unit` picks units with no verse that was posted before.
+- 27 Nov 2026 (owner): ALL audio must have a strong echo. render.py `ECHO` adds it; the audio check compares the video
+  against the original recitation with the same echo, so anything else added still fails.

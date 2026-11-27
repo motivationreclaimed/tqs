@@ -44,6 +44,10 @@ def plan_background(total, pick_clip, slow=1.0):
     return segs
 
 
+# owner 27 Nov 2026: every video has a strong echo on the recitation
+ECHO = "aecho=0.8:0.88:90|180|320:0.45|0.3|0.18"
+
+
 def render(kind, S, A, B, timings, audio, out, reciter_name, pick_clip, channel="The Quran Sounds"):
     vertical = kind == "short"
     T = {int(t["verse_key"].split(":")[1]): t for t in json.load(open(timings))["audio_file"]["timestamps"]}
@@ -104,7 +108,7 @@ def render(kind, S, A, B, timings, audio, out, reciter_name, pick_clip, channel=
     base = ("crop=ih*9/16:ih,scale=1080:1920:flags=lanczos" if vertical
             else "scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080")
     FIN, FOUT = 0.3, (1.0 if vertical else 2.5)
-    audio_f = (f"atrim={a0:.3f}:{a1:.3f},asetpts=PTS-STARTPTS,adelay={int((INTRO + LEAD) * 1000)}:all=1,asetpts=N/SR/TB,apad,"
+    audio_f = (f"atrim={a0:.3f}:{a1:.3f},asetpts=PTS-STARTPTS,{ECHO},adelay={int((INTRO + LEAD) * 1000)}:all=1,asetpts=N/SR/TB,apad,"
                f"atrim=0:{total:.3f},afade=out:st={end_audio + 0.3:.3f}:d=1.2")
     if vertical:  # few scenes: one pass with crossfades and a gentle zoom
         inp, fl = [], []
