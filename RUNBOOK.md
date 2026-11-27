@@ -101,3 +101,5 @@ stays PRIVATE and must never be made public.
 - Never repeat verses already posted (any reciter): `next_unit` picks units with no verse that was posted before.
 - 27 Nov 2026 (owner): ALL audio must have a strong echo. render.py `ECHO` adds it; the audio check compares the video
   against the original recitation with the same echo, so anything else added still fails.
+- 27 Nov 2026 (owner): every post is a NEW ayah (never posted before) and the reciter switches every post
+  (Mishary, Abdul Basit, Mishary, ...). `next_unit` does both automatically. Unused material: ~520 ayahs (~7 months).

@@ -97,7 +97,7 @@ def long_sequence():
 
 
 # ---------------- choosing ----------------
-def next_unit(kind, skip=(), mode=30):
+def next_unit(kind, skip=(), mode=30, prev_unit=None):
     log = load_log()
     if kind == "short":
         ck = "short_cycle" if mode == 30 else "short60_cycle"
@@ -117,9 +117,16 @@ def next_unit(kind, skip=(), mode=30):
         fresh = [u for u in todo if not unit_verses(u) & used]
         if fresh:
             todo = fresh
+        # owner 27 Nov 2026: switch reciter every post (the previous Short, in this batch or already scheduled)
+        prev = [prev_unit] if prev_unit else [p["unit"] for p in log["posts"] if p["unit"].startswith("short:")]
+        if prev:
+            last_rk = prev[-1].split(":")[1]
+            other = [u for u in todo if u.split(":")[1] != last_rk]
+            if other:
+                todo = other
     if not todo:  # everything used: new cycle — same audio, new background clips, so never an identical video
         log[ck] = cyc + 1; save_log(log)
-        return next_unit(kind, skip, mode)
+        return next_unit(kind, skip, mode, prev_unit)
     return todo[0], cyc
 
 
@@ -421,7 +428,8 @@ def plan_batch(max_items=14):
             for _ in range(6):                 # a unit that fails its check is skipped: try the next one (rule 1)
                 unit = None
                 try:
-                    unit, cyc = next_unit("short", skip=used | bad, mode=m)
+                    unit, cyc = next_unit("short", skip=used | bad, mode=m,
+                                          prev_unit=items[-1]["unit"] if items else None)
                     it = make("short", unit, cyc); it["mode"], it["cycle"] = m, cyc
                     secs = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration",
                                                           "-of", "csv=p=0", it["file"]]).decode())
