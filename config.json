@@ -42,8 +42,8 @@
  ],
  "schedule_ahead_days": 7,
  "trial_until": "2026-11-28",
- "youtube_long_ok": true,
- "youtube_long_note": "Channel verified by owner on 15 Nov 2026 (videos over 15 min allowed).",
+ "youtube_long_ok": false,
+ "youtube_long_note": "27 Nov 2026 (owner): NO long / 16:9 videos at all for now.",
  "post_days": [
   0,
   1,
@@ -54,14 +54,18 @@
  ],
  "post_days_note": "After the trial: Shorts Mon-Fri at 16:00 UTC, long video on Sunday (every 7 days), Saturday off. About 5 Shorts + 1 long a week.",
  "disabled_reciters": [
-  "abdulbasit_mujawwad",
   "husary",
   "minshawi",
-  "mishary"
+  "shatri",
+  "shuraim",
+  "sudais"
  ],
- "disabled_reciters_note": "25 Nov 2026 (owner): only Husary, Minshawi and Al-Shatri for now (Mishary and Abdul Basit get claimed/blocked). Hani Ar-Rifai failed verification. 25 Nov: Husary blocked on YouTube too -> paused. 26 Nov: Minshawi blocked too -> removed.",
+ "disabled_reciters_note": "27 Nov 2026 (owner): every Quran.com reciter got blocked too. Back to Mishary and Abdul Basit only, Shorts only, until a reliable unclaimed reciter is found.",
  "long_short_min_seconds": 61,
  "long_short_max_seconds": 100,
  "short_mix_note": "Half of the Shorts are 61 s+ (alternating), for TikTok monetisation (owner, 20 Nov 2026).",
- "publer_max_scheduled": 10
+ "publer_max_scheduled": 10,
+ "force_short_mode": 30,
+ "youtube_max_seconds": 40,
+ "short_rules_note": "27 Nov 2026 (owner): only ~30 s Shorts (mostly under a minute). Any Short longer than 40 s is NOT posted to YouTube (Instagram + TikTok only). Never repeat verses that were already posted."
 }

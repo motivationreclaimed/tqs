@@ -110,10 +110,30 @@ def next_unit(kind, skip=(), mode=30):
     if not seq:
         raise RuntimeError(f"no {kind} units available (mode {mode})")
     todo = [u for u in seq if u not in done and u not in skip]
+    if kind == "short":   # owner: never repeat verses already posted (any reciter), while unused verses remain
+        used = posted_verses(log)
+        for s in skip:                     # also not twice in the same batch
+            if s.startswith("short:"): used |= unit_verses(s)
+        fresh = [u for u in todo if not unit_verses(u) & used]
+        if fresh:
+            todo = fresh
     if not todo:  # everything used: new cycle — same audio, new background clips, so never an identical video
         log[ck] = cyc + 1; save_log(log)
         return next_unit(kind, skip, mode)
     return todo[0], cyc
+
+
+def unit_verses(u):
+    p = u.split(":"); S = int(p[2]); a, b = map(int, p[3].split("-"))
+    return {(S, v) for v in range(a, b + 1)}
+
+
+def posted_verses(log):
+    out = set()
+    for p in log["posts"]:
+        if p["unit"].startswith("short:"):
+            out |= unit_verses(p["unit"])
+    return out
 
 
 def next_short_mode():
@@ -384,7 +404,7 @@ def plan_batch(max_items=14):
     # Publer free plan: at most 10 scheduled posts per account at a time
     pending = sum(1 for p in log["posts"] if p["unit"].startswith("short:") and (p.get("scheduled_at") or "") > now.strftime("%Y-%m-%dT%H:%M"))
     max_items = min(max_items, CFG.get("publer_max_scheduled", 10) - pending)
-    forced = os.environ.get("TQS_FORCE_MODE")          # e.g. 60 for a test batch of only 60 s+ Shorts
+    forced = os.environ.get("TQS_FORCE_MODE") or CFG.get("force_short_mode")   # 30 = only ~30 s Shorts
     mode = int(forced) if forced else next_short_mode()
     for t in slot_times(now, end):
         key = t.strftime("%Y-%m-%dT%H:%M")
@@ -392,12 +412,18 @@ def plan_batch(max_items=14):
             continue
         # long videos are NOT planned here: they go straight to YouTube (python3 run.py long)
         it = None
-        for m in (mode, 90 - mode):          # if one length fails or has nothing, use the other
+        for m in ((mode,) if forced else (mode, 90 - mode)):   # if one length fails or has nothing, use the other
             for _ in range(6):                 # a unit that fails its check is skipped: try the next one (rule 1)
                 unit = None
                 try:
                     unit, cyc = next_unit("short", skip=used | bad, mode=m)
                     it = make("short", unit, cyc); it["mode"], it["cycle"] = m, cyc
+                    secs = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration",
+                                                          "-of", "csv=p=0", it["file"]]).decode())
+                    it["seconds"] = round(secs, 1)
+                    if secs > CFG.get("youtube_max_seconds", 9999):   # owner: over 40 s -> Instagram + TikTok only
+                        yt = CFG["publer"]["youtube_account_id"]
+                        it["publer_account_ids"] = [a for a in it["publer_account_ids"] if a != yt]
                     break
                 except Exception as e:  # never stop: record it and try the next unit / the other kind of Short
                     failed(unit or f"short{m}-render", str(e))

@@ -91,3 +91,11 @@ Long-video thumbnails for these reciters have no photo (text only). The Mishary 
 stays PRIVATE and must never be made public.
 - Long videos over 25 minutes are rendered in CALM mode (backgrounds 2.5x slower, 12 fps, 720p, AAC 96k) so the
   full surah fits the 100 MB hosting limit with sharp text. Owner wants full length, fully automatic.
+
+## 27 Nov 2026 (owner): current rules, these override older sections
+- Reciters: ONLY Mishary Alafasy and Abdul Basit (every Quran.com reciter tested got blocked). Others are in
+  `disabled_reciters`.
+- Shorts only, about 30 s (`force_short_mode` 30). NO long / 16:9 videos (`youtube_long_ok` false): skip step 6
+  (`run.py long` prints SKIP) and the Sunday publish task has nothing to do.
+- A Short longer than 40 s goes to Instagram + TikTok only (plan.json `publer_account_ids` already leaves YouTube out).
+- Never repeat verses already posted (any reciter): `next_unit` picks units with no verse that was posted before.
