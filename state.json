@@ -40,7 +40,8 @@
   52,
   122,
   20,
-  118
+  118,
+  145
  ],
  "used_long_cats": [
   "Duas Before Sleeping",
@@ -172,8 +173,8 @@
    "starts": [
     0.0
    ],
-   "scheduled": false,
-   "note": "owner deleted the old-audio post on 27 Nov: re-render WITH ECHO and schedule again"
+   "scheduled": true,
+   "note": "scheduled 27 Nov with echo"
   },
   {
    "id": "w1_06_mid",
@@ -195,8 +196,8 @@
    "starts": [
     0.0
    ],
-   "scheduled": false,
-   "note": "owner deleted the old-audio post on 27 Nov: re-render WITH ECHO and schedule again"
+   "scheduled": true,
+   "note": "scheduled 27 Nov with echo"
   },
   {
    "id": "w1_07_short",
@@ -215,8 +216,8 @@
    "starts": [
     0.0
    ],
-   "scheduled": false,
-   "note": "owner deleted the old-audio post on 27 Nov: re-render WITH ECHO and schedule again"
+   "scheduled": true,
+   "note": "scheduled 27 Nov with echo"
   },
   {
    "id": "w1_08_long",
@@ -292,8 +293,8 @@
     546.1,
     568.7
    ],
-   "scheduled": false,
-   "note": "owner deleted the old-audio post on 27 Nov: re-render WITH ECHO and schedule again"
+   "scheduled": true,
+   "note": "scheduled 27 Nov with echo"
   },
   {
    "id": "w1_09_short",
@@ -312,8 +313,8 @@
    "starts": [
     0.0
    ],
-   "scheduled": false,
-   "note": "owner deleted the old-audio post on 27 Nov: re-render WITH ECHO and schedule again"
+   "scheduled": true,
+   "note": "scheduled 27 Nov with echo"
   },
   {
    "id": "w1_10_mid",
@@ -339,7 +340,8 @@
    ],
    "T": 84.6,
    "scheduled": false,
-   "note": "owner deleted the old-audio post on 27 Nov: re-render WITH ECHO and schedule again"
+   "note": "owner deleted the old-audio post on 27 Nov: re-render WITH ECHO and schedule again",
+   "dropped": "merged portrait video: owner rule, portrait = one dua only"
   },
   {
    "id": "w1_11_short",
@@ -358,8 +360,8 @@
    "starts": [
     0.0
    ],
-   "scheduled": false,
-   "note": "owner deleted the old-audio post on 27 Nov: re-render WITH ECHO and schedule again"
+   "scheduled": true,
+   "note": "scheduled 27 Nov with echo"
   },
   {
    "id": "w1_12_mid",
@@ -381,8 +383,8 @@
    "starts": [
     0.0
    ],
-   "scheduled": false,
-   "note": "owner deleted the old-audio post on 27 Nov: re-render WITH ECHO and schedule again"
+   "scheduled": true,
+   "note": "scheduled 27 Nov with echo"
   },
   {
    "id": "w1_13_short",
@@ -401,8 +403,8 @@
    "starts": [
     0.0
    ],
-   "scheduled": false,
-   "note": "owner deleted the old-audio post on 27 Nov: re-render WITH ECHO and schedule again"
+   "scheduled": true,
+   "note": "scheduled 27 Nov with echo"
   },
   {
    "id": "w1_14_mid",
@@ -497,8 +499,8 @@
    "starts": [
     0.0
    ],
-   "scheduled": false,
-   "note": "owner deleted the old-audio post on 27 Nov: re-render WITH ECHO and schedule again"
+   "scheduled": true,
+   "note": "scheduled 27 Nov with echo"
   },
   {
    "id": "w2_01_short",
@@ -512,7 +514,13 @@
    ],
    "yt_title": "Dua for Breaking the Fast | Hisn al-Muslim 176",
    "thumb": "Dua for Breaking the Fast",
-   "caption": "Dua for Breaking the Fast | Hisn al-Muslim 176\n\nDua for Breaking the Fast (Hisn al-Muslim 176). Make this dua part of your day:\nThe thirst has gone and the veins are quenched, and reward is confirmed, if Allah wills.\n\nIf you notice any mistake or issue in this video, please contact us at tdh@reclaivo.com\n\nRecitation: Muhammad Jumah for OpenDua\nArabic, transliteration and translation: OpenDua (opendua.org), CC BY 4.0\nSource: Hisn al-Muslim (Fortress of the Muslim) by Sa'id bin Ali bin Wahf Al-Qahtani\n\n#dua #islam #hisnulmuslim #theduahour #ramadan"
+   "caption": "Dua for Breaking the Fast | Hisn al-Muslim 176\n\nDua for Breaking the Fast (Hisn al-Muslim 176). Make this dua part of your day:\nThe thirst has gone and the veins are quenched, and reward is confirmed, if Allah wills.\n\nIf you notice any mistake or issue in this video, please contact us at tdh@reclaivo.com\n\nRecitation: Muhammad Jumah for OpenDua\nArabic, transliteration and translation: OpenDua (opendua.org), CC BY 4.0\nSource: Hisn al-Muslim (Fortress of the Muslim) by Sa'id bin Ali bin Wahf Al-Qahtani\n\n#dua #islam #hisnulmuslim #theduahour #ramadan",
+   "T": 16.0,
+   "starts": [
+    0.0
+   ],
+   "scheduled": "pending.json",
+   "note": "Instagram + TikTok scheduled 27 Nov with echo; YouTube in pending.json"
   },
   {
    "id": "w2_02_mid",
@@ -730,6 +738,27 @@
    "yt_title": "Dua When You See Someone in Hardship | Hisn al-Muslim 194",
    "thumb": "Dua When You See Someone in Hardship",
    "caption": "Dua When You See Someone in Hardship | Hisn al-Muslim 194\n\nDua When You See Someone in Hardship (Hisn al-Muslim 194). Make this dua part of your day:\nAll praise is for Allah Who saved me from that which He tested you with and Who most certainly favoured me over much of His creation.\n\nIf you notice any mistake or issue in this video, please contact us at tdh@reclaivo.com\n\nRecitation: Muhammad Jumah for OpenDua\nArabic, transliteration and translation: OpenDua (opendua.org), CC BY 4.0\nSource: Hisn al-Muslim (Fortress of the Muslim) by Sa'id bin Ali bin Wahf Al-Qahtani\n\n#dua #islam #hisnulmuslim #theduahour #adab"
+  },
+  {
+   "id": "w1_10_single",
+   "kind": "short",
+   "when": "2026-11-30T19:00:00",
+   "entries": [
+    145
+   ],
+   "page_titles": [
+    "Dua for New Parents"
+   ],
+   "replaces": "w1_10_mid",
+   "scheduled": true,
+   "yt_title": "Dua for New Parents | Hisn al-Muslim 145",
+   "thumb": "Dua for New Parents",
+   "caption": "Dua for New Parents | Hisn al-Muslim 145\n\nDua for New Parents (Hisn al-Muslim 145). Save this dua for later:\nMay Allah bless the child granted to you, enable you to thank the Giver, allow the child to reach maturity, and bless you with the child\u2019s dutifulness. May Allah bless you and shower His blessings upon you, reward you with goodness, grant you a similar blessing, and make your reward abundant.\n\nIf you notice any mistake or issue in this video, please contact us at tdh@reclaivo.com\n\nRecitation: Muhammad Jumah for OpenDua\nArabic, transliteration and translation: OpenDua (opendua.org), CC BY 4.0\nSource: Hisn al-Muslim (Fortress of the Muslim) by Sa'id bin Ali bin Wahf Al-Qahtani\n\n#dua #islam #hisnulmuslim #theduahour #family",
+   "T": 34.8,
+   "starts": [
+    0.0
+   ],
+   "note": "scheduled 27 Nov with echo"
   }
  ]
 }

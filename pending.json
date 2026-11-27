@@ -1,4 +1,14 @@
 {
- "note": "empty: owner deleted all scheduled posts on 27 Nov so everything is re-made with the echo",
- "posts": []
+ "note": "Rendered WITH ECHO, checked, already in the Publer library. Only create_post is needed once YouTube has a free slot (free plan: 10 per account). Skip if the time has passed.",
+ "posts": [
+  {
+   "id": "w2_01_short",
+   "when": "2026-12-03T08:00:00Z",
+   "accounts": [
+    "6b06464ac225c1163f0ce0ef"
+   ],
+   "media_id": "6b09ea42ae84fa051ff50378",
+   "text": "Dua for Breaking the Fast | Hisn al-Muslim 176\n\nDua for Breaking the Fast (Hisn al-Muslim 176). A dua every Muslim should know:\nThe thirst has gone and the veins are quenched, and reward is confirmed, if Allah wills.\n\nIf you notice any mistake or issue in this video, please contact us at tdh@reclaivo.com\n\nRecitation: Muhammad Jumah for OpenDua\nArabic, transliteration and translation: OpenDua (opendua.org), CC BY 4.0\nSource: Hisn al-Muslim (Fortress of the Muslim) by Sa'id bin Ali bin Wahf Al-Qahtani\n\n#dua #islam #hisnulmuslim #theduahour #ramadan"
+  }
+ ]
 }
