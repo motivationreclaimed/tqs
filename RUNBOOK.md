@@ -1,7 +1,7 @@
-# The Dua Hour: DAILY top-up run (follow exactly)
+# The Dua Hour: top-up run, TWICE A WEEK (Tuesday and Saturday), follow exactly
 
 Publer stays on the FREE plan (owner's decision, permanent): max 10 scheduled posts per social account.
-So this run happens every day and tops the queue back up, one slot at a time, in plan order.
+So this run happens twice a week (owner: save credits) and tops the queue back up, one slot at a time, in plan order.
 
 ## Owner's rules (non-negotiable)
 1. **Accuracy first.** These are duas from the Quran and Sunnah. If anything on screen, in the audio or in a caption
